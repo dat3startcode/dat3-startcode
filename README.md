@@ -26,6 +26,7 @@
 - add this to the file, with your own values:
 
 `export DEPLOYED="DEV_ON_DIGITAL_OCEAN"`
+
 `export USER="YOUR_DB_USER"`
 
 `export PW="YOUR_DB_PASSWORD"`
@@ -38,9 +39,8 @@
   `mvn clean -Dremote.user=script_user -Dremote.password=lyngby tomcat7:deploy`
 
 - If everything was fine the project should be deployed to your droplet, ready to use with the remote database. Test like this:
-
-`URL_FOR_YOUR_DROPLET/rest-jpa-devops-starter/api/xxx`  (This does not use the database)
-`URL_FOR_YOUR_DROPLET/rest-jpa-devops-starter/api/xxx/count (This queries the database)
+  - `URL_FOR_YOUR_DROPLET/rest-jpa-devops-starter/api/xxx`  (This does not use the database)
+  - `URL_FOR_YOUR_DROPLET/rest-jpa-devops-starter/api/xxx/count (This queries the database)
 
 
 
