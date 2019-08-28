@@ -46,8 +46,6 @@ This document contains two major sections.
   - `URL_FOR_YOUR_DROPLET/rest-jpa-devops-starter/api/xxx/count` (This queries the database)
 
 ### ADD CI-control to your project and let Maven deploy, when the project BUILDS and all tests are GREEN
-
-## Make a small change WITHOUT BREAKING ANYTHING and veryfy that 
 - Login to travis using Github, and select your project on the dashboard
 - Click "More options" and select "settings"
 - Create two Environment Variables with names and values as sketched below (must be done in two steps);
