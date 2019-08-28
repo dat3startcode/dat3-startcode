@@ -38,12 +38,12 @@
   - `URL_FOR_YOUR_DROPLET/rest-jpa-devops-starter/api/xxx`  (This does not use the database)
   - `URL_FOR_YOUR_DROPLET/rest-jpa-devops-starter/api/xxx/count` (This queries the database)
 
-### ADD CI-control to your project and let Maven deploy, when the project BUILDS and all tests are GREEN
+### Add CI-to your project and let Maven deploy, when the project BUILDS and tests are GREEN
 - Login to travis using Github, and select your project on the dashboard
 - Click "More options" and select "settings"
 - Create two Environment Variables with names and values as sketched below (must be done in two steps);
- - REMOTE_PW   :  *Your value for the script_user password*
- - REMOTE_USER :  *script_user*
+  - REMOTE_PW   :  *Your value for the script_user password*
+  - REMOTE_USER :  *script_user*
  
  - Now make a small change to index.html (one that is easy to see after deploy)
  - In a terminal, in the root of the project, type: `mvn clean test` (always build and test before you commit)
