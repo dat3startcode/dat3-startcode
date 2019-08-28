@@ -30,7 +30,7 @@
 `export CONNECTION_STR="jdbc:mysql://localhost:3306/startcode"
 `
 - Save the file, and restart Tomcat `sudo systemcctl restart tomcat`
-- Back in a LOCAL terminal (git bash for Windows Users) in the root of the project type (add your own password):
+- Back in a LOCAL terminal (git bash for Windows Users), in the root of the project, type (add your own password):
 
   `mvn clean test -Dremote.user=script_user -Dremote.password=PW_FOR_script_user tomcat7:deploy`
 
