@@ -5,9 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 
 
 @Entity
+@NamedQuery(name = "RenameMe.deleteAllRows", query = "DELETE from RenameMe")
 public class RenameMe implements Serializable {
 
     private static final long serialVersionUID = 1L;

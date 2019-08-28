@@ -76,6 +76,4 @@ public class EMF_Creator {
         }
         return Persistence.createEntityManagerFactory(puName, props);
     }
-
-    
 }

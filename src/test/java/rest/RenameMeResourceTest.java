@@ -70,7 +70,7 @@ public class RenameMeResourceTest {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.createQuery("DELETE from RenameMe").executeUpdate();
+            em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
             em.persist(new RenameMe("Some txt","More text"));
             em.persist(new RenameMe("aaa","bbb"));
            
