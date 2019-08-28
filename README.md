@@ -25,14 +25,13 @@
 - ssh into your droplet and open this file with nano: `/opt/tomcat/bin/setenv.sh`
 - add this to the file, with your own values:
 
-`
-export DEPLOYED="DEV_ON_DIGITAL_OCEAN"
+`export DEPLOYED="DEV_ON_DIGITAL_OCEAN"`
 
-export USER="YOUR_DB_USER"
+`export USER="YOUR_DB_USER"`
 
-export PW="YOUR_DB_PASSWORD"
+`export PW="YOUR_DB_PASSWORD"`
 
-export CONNECTION_STR="jdbc:mysql://localhost:3306/startcode"
+`export CONNECTION_STR="jdbc:mysql://localhost:3306/startcode"
 `
 - Save the file, and restart Tomcat `sudo systemcctl restart tomcat`
 - Back in a LOCAL terminal (git bash for Windows Users) in the root of the project type:
