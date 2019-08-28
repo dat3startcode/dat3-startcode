@@ -26,7 +26,6 @@
 - add this to the file, with your own values:
 
 `export DEPLOYED="DEV_ON_DIGITAL_OCEAN"`
-
 `export USER="YOUR_DB_USER"`
 
 `export PW="YOUR_DB_PASSWORD"`
