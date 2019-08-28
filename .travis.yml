@@ -2,7 +2,6 @@
 ## Make sure to rename the database name in the CREATE DATABASE script below to the SAME name as used for your local tests
 ---
 
-
 dist: bionic
 
 language: java
@@ -25,8 +24,10 @@ before_script:
 #- PW="ax2"
 #- USER_NAME="dev"
 
+- sudo apt-get clean
+- sudo rm -r /var/lib/apt/lists/*
 
-# - sudo apt-get update
+- sudo apt-get update
 - sudo apt-get install -y debconf-utils
 - sudo debconf-set-selections <<< 'mysql-apt-config mysql-apt-config/select-server select mysql-8.0'
 - wget https://dev.mysql.com/get/mysql-apt-config_0.8.13-1_all.deb
