@@ -1,6 +1,9 @@
 [![Build Status](https://travis-ci.org/dat3startcode/rest-jpa-devops-startcode.svg?branch=master)](https://travis-ci.org/dat3startcode/rest-jpa-devops-startcode)
 
 # Getting Started
+This document contains two major sections. 
+ - *Proof of Concept, first time you use the start code* Which you should use ONLY the first time you get introduces to this start code
+ - 
 
 ## Proof of Concept, first time you use the start code
 
@@ -19,11 +22,11 @@
 - in a terminal (git bash for Windows Users) in the root of the project type: `mvn test`
 - Hopefully the previous step was a success, if not, fix the problem(s)
 
-### Now lets deploy the project (manually) via Maven
+### Deploy the project (manually) via Maven
 - Open the pom-file, and locate the properties-section in the start of the file. Change the value for `remote.server` to the URL for your OWN droplet
 
 - ssh into your droplet and open this file with nano: `/opt/tomcat/bin/setenv.sh`
-- add this to the file, with your own values:
+- add this to the file, with your own values (those you selected [here](https://docs.google.com/document/d/1POXowHvFNSTL6C-QOlivkSnL_iF1ogsLGFRTckbBdt8/edit#heading=h.11opjunivufy)):
 
 `export DEPLOYED="DEV_ON_DIGITAL_OCEAN"`
 
@@ -34,34 +37,31 @@
 `export CONNECTION_STR="jdbc:mysql://localhost:3306/startcode"
 `
 - Save the file, and restart Tomcat `sudo systemcctl restart tomcat`
-- Back in a LOCAL terminal (git bash for Windows Users) in the root of the project type:
+- Back in a LOCAL terminal (git bash for Windows Users) in the root of the project type (add your own password):
 
-  `mvn clean -Dremote.user=script_user -Dremote.password=lyngby tomcat7:deploy`
+  `mvn clean test -Dremote.user=script_user -Dremote.password=PW_FOR_script_user tomcat7:deploy`
 
 - If everything was fine the project should be deployed to your droplet, ready to use with the remote database. Test like this:
   - `URL_FOR_YOUR_DROPLET/rest-jpa-devops-starter/api/xxx`  (This does not use the database)
-  - `URL_FOR_YOUR_DROPLET/rest-jpa-devops-starter/api/xxx/count (This queries the database)
+  - `URL_FOR_YOUR_DROPLET/rest-jpa-devops-starter/api/xxx/count` (This queries the database)
 
-
-
-
-
-
-Click the green Activate button, and select the repositories you want to use with Travis CI
-
-klon projekt
-delete the .git folder 
-Do your own git init
-Create a repository for this project and commmit it to git "initial commit"
-Go to Travis and "flip the switch"
+### ADD CI-control to your project and let Maven deploy, when the project BUILDS and all tests are GREEN
 
 ## Make a small change WITHOUT BREAKING ANYTHING and veryfy that 
+- Login to travis using Github, and select your project on the dashboard
+- Click "More options" and select "settings"
+- Create two Environment Variables with names and values as sketched below (must be done in two steps);
+ - REMOTE_PW   :  *Your value for the script_user password*
+ - REMOTE_USER :  *script_user*
+ 
+ - Now make a small change to index.html (one that is easy to see after deploy)
+ - In a terminal, in the root of the project, type: `mvn clean test` (always build and test before you commit)
+ - If everything was fine, commit and push your changes
+ - On *travis-ci.org* verify that your commit has been detected and a "build cycle" has started
+ - If everything was fine (might take a few minutes) verify that Travis has deployed your new war file to your droplet
 
 
-Lav to databaser (dev og test)
 
-Change this line in the .travis.yml file to use the SAME name as used for your test database in the previous step:
-sudo mysql -u root -e "CREATE DATABASE mydb_test;"
 
 
 We suggest you always follow this pattern for namming your databases
