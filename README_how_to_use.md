@@ -1,5 +1,6 @@
 # How to use this start project for future rest/jpa project with CI
 
+### Initial Setup
 - Clone this project
 - Delete the .git folder and Do "Your own" `git init`
 - Create your OWN repository for this project on github
