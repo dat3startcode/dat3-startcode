@@ -8,6 +8,8 @@
 - *Testing, including tests of REST-API's*
 - *CI and CONTINUOUS DELIVERY*
 
+### Preconditions
+*In order to use this code, you should have a local developer setup + a "matching" droplet on Digital Ocean as described in the 3. semester guidelines* 
 # Getting Started
 
 This project contains two major documentation files: 
