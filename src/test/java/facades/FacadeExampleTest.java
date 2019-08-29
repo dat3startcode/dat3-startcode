@@ -11,6 +11,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+//Uncomment the line below, to temporarily disable this test
+//@Disabled
 public class FacadeExampleTest {
     private static  EntityManagerFactory emf;
     private static  FacadeExample facade;

@@ -17,8 +17,10 @@ import static org.hamcrest.Matchers.equalTo;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled
 public class RenameMeResourceTest {
 
     private static final int SERVER_PORT = 7777;
@@ -60,6 +62,7 @@ public class RenameMeResourceTest {
     
     @AfterAll
     public static void closeTestServer(){
+        //System.in.read();
          httpServer.shutdownNow();
     }
     
@@ -106,5 +109,7 @@ public class RenameMeResourceTest {
         .statusCode(HttpStatus.OK_200.getStatusCode())
         .body("count", equalTo(2));   
     }
+    
+    
 
 }
