@@ -3,7 +3,7 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import entities.RenameMe;
-import entityUtils.EMF_Creator;
+import utils.EMF_Creator;
 import facades.FacadeExample;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Consumes;

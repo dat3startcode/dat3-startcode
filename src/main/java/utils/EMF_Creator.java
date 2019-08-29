@@ -1,4 +1,4 @@
-package entityUtils;
+package utils;
 
 import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
