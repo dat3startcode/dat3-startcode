@@ -1,27 +1,30 @@
 package utils;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.Settings;
 
 public class SettingsTest {
     
     @Test
     public void testGetSingleProperty(){
-        assertEquals("6666", Settings.getPropertyValue("db.port"));
+        assertEquals("3307", Settings.getPropertyValue("db.port"));
     }
+    
     
     @Test
     public void getDEV_DBConnection(){
-        assertEquals("jdbc:mysql://localhost:6666/nameOfDb", Settings.getDEV_DBConnection());
+        //This test is a little bit hacky since it uses a property that can be changed by users
+        //Is Better than NO test
+        String dbName = Settings.getPropertyValue("db.database");
+        assertEquals(String.format("jdbc:mysql://localhost:3307/%s",dbName), Settings.getDEV_DBConnection());
     }
     
     @Test
     public void getTEST_DBConnection(){
-        assertEquals("jdbc:mysql://localhost:6666/nameOfTestDB", Settings.getTEST_DBConnection());
+        //This test is also a little bit hacky since it uses a property that can be changed by users
+        //Is Better than NO test
+        String dbName = Settings.getPropertyValue("db.testdatabase");
+        assertEquals(String.format("jdbc:mysql://localhost:3307/%s",dbName), Settings.getTEST_DBConnection());
     }
     
 }
