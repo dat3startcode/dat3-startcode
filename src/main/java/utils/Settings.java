@@ -33,7 +33,7 @@ public class Settings {
     }
    
     /**
-     * Utility method that builds the DEV-connection string using the property values: db.server , db.port and db.database
+     * Utility method that builds the DEV-connection string using the property values: db.server , db.port and db.testdatabase
      * @return 
      *  a connection string formatted like this: "jdbc:mysql://localhost:3307/startcode"
      */
