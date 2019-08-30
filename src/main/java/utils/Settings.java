@@ -58,11 +58,11 @@ public class Settings {
         }
     }
     
-    //Simple manual test
-    public static void main(String[] args) {
-       System.out.println(getPropertyValue("db.port"));
-       System.out.println(getDEV_DBConnection());
-       System.out.println(getTEST_DBConnection());
-       System.out.println(getPropertyValue("i.dont.exist"));
-    }
+//    //Simple manual test
+//    public static void main(String[] args) {
+//       System.out.println(getPropertyValue("db.port"));
+//       System.out.println(getDEV_DBConnection());
+//       System.out.println(getTEST_DBConnection());
+//       System.out.println(getPropertyValue("i.dont.exist"));
+//    }
 }

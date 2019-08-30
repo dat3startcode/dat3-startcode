@@ -85,7 +85,7 @@ public class RenameMeResourceTest {
     }
     
     @Test
-    public void serverIsRunning() {
+    public void testServerIsUp() {
         System.out.println("Testing is server UP");
         given().when().get("/xxx").then().statusCode(200);
     }
@@ -110,7 +110,4 @@ public class RenameMeResourceTest {
         .statusCode(HttpStatus.OK_200.getStatusCode())
         .body("count", equalTo(2));   
     }
-    
-    
-
 }
