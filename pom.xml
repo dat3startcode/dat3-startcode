@@ -4,7 +4,7 @@
 
     <groupId>dat.sem3</groupId>
     <artifactId>rest-jpa-devops-starter</artifactId>
-    <version>1.0</version>
+    <version>1.0.1</version>
     <packaging>war</packaging>
 
     <name>jpa-rest-devops-starter</name>

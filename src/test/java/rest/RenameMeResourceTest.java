@@ -19,6 +19,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import utils.EMF_Creator.DbSelector;
+import utils.EMF_Creator.Strategy;
 
 //Uncomment the line below, to temporarily disable this test
 //@Disabled
@@ -40,16 +42,10 @@ public class RenameMeResourceTest {
 
     @BeforeAll
     public static void setUpClass() {
-        //First Drop and Rebuild the test database 
-        emf = EMF_Creator.createEntityManagerFactory(
-                "pu",
-                "jdbc:mysql://localhost:3307/startcode_test",
-                "dev",
-                "ax2",
-                EMF_Creator.Strategy.DROP_AND_CREATE);
+        emf = EMF_Creator.createEntityManagerFactory(DbSelector.TEST, Strategy.CREATE);
 
-        //Set System property so the project executed by the Grizly-server wil use this same database
-        System.setProperty("IS_TEST", TEST_DB);
+        //NOT Required if you use the version of EMF_Creator.createEntityManagerFactory used above        
+        //System.setProperty("IS_TEST", TEST_DB);
         //We are using the database on the virtual Vagrant image, so username password are the same for all dev-databases
         
         httpServer = startServer();
@@ -57,7 +53,7 @@ public class RenameMeResourceTest {
         //Setup RestAssured
         RestAssured.baseURI = SERVER_URL;
         RestAssured.port = SERVER_PORT;
-        
+   
         RestAssured.defaultParser = Parser.JSON;
     }
     

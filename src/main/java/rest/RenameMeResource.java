@@ -24,7 +24,7 @@ public class RenameMeResource {
                 "jdbc:mysql://localhost:3307/startcode",
                 "dev",
                 "ax2",
-                EMF_Creator.Strategy.DROP_AND_CREATE);
+                EMF_Creator.Strategy.CREATE);
     private static final FacadeExample FACADE =  FacadeExample.getFacadeExample(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
             
@@ -38,6 +38,7 @@ public class RenameMeResource {
     @Produces({MediaType.APPLICATION_JSON})
     public String getRenameMeCount() {
         long count = FACADE.getRenameMeCount();
+        //System.out.println("--------------->"+count);
         return "{\"count\":"+count+"}";  //Done manually so no need for a DTO
     }
 

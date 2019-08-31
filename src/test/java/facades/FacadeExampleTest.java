@@ -11,6 +11,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utils.Settings;
+import utils.EMF_Creator.DbSelector;
+import utils.EMF_Creator.Strategy;
 
 //Uncomment the line below, to temporarily disable this test
 //@Disabled
@@ -29,7 +31,7 @@ public class FacadeExampleTest {
                 "jdbc:mysql://localhost:3307/startcode_test",
                 "dev",
                 "ax2",
-                EMF_Creator.Strategy.DROP_AND_CREATE);
+                EMF_Creator.Strategy.CREATE);
         facade = FacadeExample.getFacadeExample(emf);
     }
 
@@ -41,13 +43,8 @@ public class FacadeExampleTest {
      */
     @BeforeAll
     public static void setUpClassV2() {
-        emf = EMF_Creator.createEntityManagerFactory(
-                "pu",
-                Settings.getTEST_DBConnection(),
-                Settings.getPropertyValue("db.user"),
-                Settings.getPropertyValue("db.password"),
-                EMF_Creator.Strategy.DROP_AND_CREATE);
-        facade = FacadeExample.getFacadeExample(emf);
+       emf = EMF_Creator.createEntityManagerFactory(DbSelector.TEST,Strategy.DROP_AND_CREATE);
+       facade = FacadeExample.getFacadeExample(emf);
     }
 
     @AfterAll

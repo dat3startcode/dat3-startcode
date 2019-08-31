@@ -26,8 +26,58 @@ public class EMF_Creator {
             }
         }
     };
-
     
+    public enum DbSelector {
+        DEV {
+            @Override
+            public String toString() {
+                return "db.database";
+            }
+        },
+        TEST {
+            @Override
+            public String toString() {
+                return "dbtest.database";
+            }
+        }
+    }
+
+    /**
+     * Create an EntityManagerFactory using values set in 'config.properties'
+     * <p>
+     * Important: If used from a REST-test call this method before you start the test server
+     * </p>
+     * @param dbType 
+     * @param strategy 
+     * @return The new EntityManagerFactory
+     */
+    public static EntityManagerFactory createEntityManagerFactory(DbSelector dbType,Strategy strategy){
+        String puName="pu"; //Only legal name
+        String connection_str;
+        String user;
+        String pw;
+        if(dbType == DbSelector.DEV){
+            connection_str = Settings.getDEV_DBConnection();
+            user = Settings.getPropertyValue("db.user");
+            pw = Settings.getPropertyValue("db.password");
+        } else{          
+            connection_str = Settings.getTEST_DBConnection();
+            //Will ensure REST code "switches" to this DB, even when running on a separate JVM
+            System.setProperty("IS_TEST", connection_str);
+            user = Settings.getPropertyValue("dbtest.user")!= null ? Settings.getPropertyValue("dbtest.user") : Settings.getPropertyValue("db.user") ;
+            pw = Settings.getPropertyValue("dbtest.password")!= null ? Settings.getPropertyValue("dbtest.password") : Settings.getPropertyValue("db.password") ;
+        }
+        return createEntityManagerFactory(puName,connection_str,user,pw,strategy);
+    }
+    /**
+     * Create an EntityManagerFactory using the supplied values
+     * @param puName
+     * @param connection_str
+     * @param user
+     * @param pw
+     * @param strategy
+     * @return  The new EntityManagerFactory
+     */        
     public static EntityManagerFactory createEntityManagerFactory(
             String puName,
             String connection_str,
