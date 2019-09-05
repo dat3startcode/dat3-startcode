@@ -42,16 +42,5 @@ public class RenameMeResource {
         return "{\"count\":"+count+"}";  //Done manually so no need for a DTO
     }
 
-    @POST
-    @Consumes({MediaType.APPLICATION_JSON})
-    public void create(RenameMe entity) {
-        throw new UnsupportedOperationException();
-    }
-    
-    @PUT
-    @Path("/{id}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public void update(RenameMe entity, @PathParam("id") int id) {
-        throw new UnsupportedOperationException();
-    }
+ 
 }
