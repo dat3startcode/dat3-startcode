@@ -27,12 +27,13 @@ before_script:
 #- sudo apt-get clean
 #- sudo rm -r /var/lib/apt/lists/*
 
-- sudo apt-get update
+# HACK to fix a problem on travis
+- sudo apt-get update || true
 - sudo apt-get install -y debconf-utils
 - sudo debconf-set-selections <<< 'mysql-apt-config mysql-apt-config/select-server select mysql-8.0'
 - wget https://dev.mysql.com/get/mysql-apt-config_0.8.13-1_all.deb
 - sudo -E dpkg -i mysql-apt-config_0.8.13-1_all.deb
-- sudo apt-get update
+- sudo apt-get update || true
 
 - echo "Installing MySQL 8..."
 - sudo -E apt-get -y install mysql-server
