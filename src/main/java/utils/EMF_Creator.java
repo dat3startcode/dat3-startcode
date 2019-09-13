@@ -60,6 +60,7 @@ public class EMF_Creator {
             connection_str = Settings.getDEV_DBConnection();
             user = Settings.getPropertyValue("db.user");
             pw = Settings.getPropertyValue("db.password");
+            System.clearProperty("IS_TEST");
         } else{          
             connection_str = Settings.getTEST_DBConnection();
             //Will ensure REST code "switches" to this DB, even when running on a separate JVM
