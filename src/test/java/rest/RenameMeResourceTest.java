@@ -28,9 +28,8 @@ public class RenameMeResourceTest {
 
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
-    //Read this line from a settings-file  since used several places
-    private static final String TEST_DB = "jdbc:mysql://localhost:3307/startcode_test";
-
+    private static RenameMe r1,r2;
+    
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
     private static EntityManagerFactory emf;
@@ -42,40 +41,39 @@ public class RenameMeResourceTest {
 
     @BeforeAll
     public static void setUpClass() {
+        //This method must be called before you request the EntityManagerFactory
+        EMF_Creator.startREST_TestWithDB();
         emf = EMF_Creator.createEntityManagerFactory(DbSelector.TEST, Strategy.CREATE);
-
-        //NOT Required if you use the version of EMF_Creator.createEntityManagerFactory used above        
-        //System.setProperty("IS_TEST", TEST_DB);
-        //We are using the database on the virtual Vagrant image, so username password are the same for all dev-databases
         
         httpServer = startServer();
-        
         //Setup RestAssured
         RestAssured.baseURI = SERVER_URL;
         RestAssured.port = SERVER_PORT;
-   
         RestAssured.defaultParser = Parser.JSON;
     }
     
     @AfterAll
     public static void closeTestServer(){
         //System.in.read();
+         //Don't forget this, if you called its counterpart in @BeforeAll
+         EMF_Creator.endREST_TestWithDB();
          httpServer.shutdownNow();
     }
     
     // Setup the DataBase (used by the test-server and this test) in a known state BEFORE EACH TEST
-    //TODO -- Make sure to change the script below to use YOUR OWN entity class
+    //TODO -- Make sure to change the EntityClass used below to use YOUR OWN (renamed) Entity class
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
+        r1 = new RenameMe("Some txt","More text");
+        r2 = new RenameMe("aaa","bbb");
         try {
             em.getTransaction().begin();
             em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
-            em.persist(new RenameMe("Some txt","More text"));
-            em.persist(new RenameMe("aaa","bbb"));
-           
+            em.persist(r1);
+            em.persist(r2); 
             em.getTransaction().commit();
-        } finally {
+        } finally { 
             em.close();
         }
     }

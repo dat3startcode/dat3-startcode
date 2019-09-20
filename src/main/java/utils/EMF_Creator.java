@@ -42,6 +42,23 @@ public class EMF_Creator {
         }
     }
 
+
+    /**
+     * Call this method before all tests, in integration tests that uses the Grizzly Server and the Test Database
+     * (in  @BeforeAll )
+     * Remember to call enRestTestWithDB() (in @AfterAll)
+     */
+    public static void startREST_TestWithDB(){
+        System.setProperty("IS_INTEGRATION_TEST_WITH_DB", "testing");
+    }
+
+    /*
+      Call this method in your @AferAll method if startREST_TestWithDB() was previously called
+    */
+    public static void endREST_TestWithDB(){
+      System.clearProperty("IS_INTEGRATION_TEST_WITH_DB"); 
+    }
+
     /**
      * Create an EntityManagerFactory using values set in 'config.properties'
      * <p>
@@ -87,11 +104,11 @@ public class EMF_Creator {
             Strategy strategy) {
 
         Properties props = new Properties();
-        
-        //A test running on a different thread can alter values to use via these properties
-        System.out.println("IS Testing: " + System.getProperty("IS_TEST"));
-        if (System.getProperty("IS_TEST") != null) {
-            connection_str = System.getProperty("IS_TEST");
+
+        //A test running on a different JVM can alter values to use via this property
+        if (System.getProperty("IS_INTEGRATION_TEST_WITH_DB") != null) {
+            System.out.println("--------- IS_INTEGRATION_TEST_WITH_DB (Integration Test With DataBase --------------- ");
+            connection_str = Settings.getTEST_DBConnection();
             user = System.getProperty("USER") != null ? System.getProperty("USER") : user;
             pw = System.getProperty("PW") != null ? System.getProperty("PW") : pw;
         }
