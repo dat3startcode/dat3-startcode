@@ -11,7 +11,10 @@
 
 - Create two local databases to be used for local development (replace xxx with a name that makes sense for your project):
   - `xxx`
-  - `xxx_test`
+  - `xxx_test`  (see hint, just below)
+  
+  If you stick with to the name *startcode_test* for your test database for *all your projects*, you will "never" have to touch the file `.travis.yml`. You can do this since all your test should Wipe the database before they start, so tests from one project, should never influence tests in another.
+  
 - *(We suggest you always follow the naming pattern used above (xxx and xxx_test) for your databases)*
 - Create a REMOTE database on your Droplet with the same name as your dev-database (xxx above)
 - **Important:** Locate the file **.travis.yml** in the root, and change the script `CREATE DATABASE startcode_test;`to use the SAME name as your local test-database (xxx_test) above
