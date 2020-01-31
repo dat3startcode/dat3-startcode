@@ -13,7 +13,7 @@
   - `xxx`
   - `xxx_test`  (see hint, just below)
   
-  If you stick with to the name *startcode_test* for your test database for *all your projects*, you will "never" have to touch the file `.travis.yml`. You can do this since all your test should Wipe the database before they start, so tests from one project, should never influence tests in another.
+  Hint: If you stick with the name *startcode_test* for the test database for *all your projects*, you will "never" have to touch the file `.travis.yml`. You can do this since all your test should Wipe the database before they start, so tests from one project, should never influence tests in another.
   
 - *(We suggest you always follow the naming pattern used above (xxx and xxx_test) for your databases)*
 - Create a REMOTE database on your Droplet with the same name as your dev-database (xxx above)
