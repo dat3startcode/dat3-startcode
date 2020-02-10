@@ -14,6 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         
         <!-- TODO: Add the URL to your own tomcat server. Used to deploy your WAR-file -->
+        <!-- Important: If your server uses https (via NGINX) use your domain name and https below: -->
         <remote.server>http://157.230.21.103/manager/text</remote.server>
         
     </properties>
