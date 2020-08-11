@@ -33,13 +33,14 @@ public class EMF_Creator {
     private static EntityManagerFactory createEntityManagerFactory(boolean isTest) {
 
         
-        /* Strategy for deployment
-           Same as in the old version of the start code. That is, environtment variables must be set in
-           setenv.sh on the server
-        */
         boolean isDeployed = (System.getenv("DEPLOYED") != null);
-        if(isDeployed){
+        if (isDeployed) {
+            /* Strategy for deployment */
             System.out.println("USING ENVIRONMENT VARIABLES");
+            System.out.println("DEPLOYED       -->" + System.getenv("DEPLOYED"));
+            System.out.println("USER           -->" + System.getenv("USER"));
+            System.out.println("PW             -->" + System.getenv("PW"));
+            System.out.println("CONNECTION_STR -->" + System.getenv("CONNECTION_STR"));
             String user = System.getenv("USER");
             String pw = System.getenv("PW");
             String connection_str = System.getenv("CONNECTION_STR");
@@ -47,20 +48,31 @@ public class EMF_Creator {
             props.setProperty("javax.persistence.jdbc.user", user);
             props.setProperty("javax.persistence.jdbc.password", pw);
             props.setProperty("javax.persistence.jdbc.url", connection_str);
+            props.setProperty("javax.persistence.jdbc.driver", "com.mysql.cj.jdbc.Driver");
             return Persistence.createEntityManagerFactory("pu", props);
         }
-        
-       
+
         /* Strategy for dev and test
            Uses the two persistence units declared in persistence.xml
-        */
-               
+         */
         String puName = isTest || System.getProperty("IS_INTEGRATION_TEST_WITH_DB") != null ? "puTest" : "pu"; //Only legal names
         if (puName.equals("puTest")) {
-            System.out.println("Using the TEST database via puTest ");
+            System.out.println("Using the TEST database via persistence-unit --> puTest ");
         } else {
-            System.out.println("Using the DEV database via pu ");
+            System.out.println("Using the DEV database via persistence-unit --> pu ");
         }
-        return Persistence.createEntityManagerFactory(puName, null);
+        EntityManagerFactory emf = null;
+        try {
+         emf =  Persistence.createEntityManagerFactory(puName, null);
+       
+        } catch (javax.persistence.PersistenceException ex){
+            System.out.println("##########################################################");
+            System.out.println("######      ERROR Creating a persistence Unit       ######");
+            System.out.println("###### Have you started the dev and test databases? ######");
+            System.out.println("######          (docker-compose up -d )             ######");
+            System.out.println("##########################################################");
+            throw ex; 
+        }
+         return emf;
     }
 }
