@@ -1,3 +1,7 @@
+# ----------------------------------------
+# NOT UPDATED FOR FALL 2020 
+# ----------------------------------------
+
 # How to use this start project for future rest/jpa project with CI
 
 ### Initial Setup
