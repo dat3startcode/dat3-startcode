@@ -142,6 +142,11 @@
                     <compilerArguments>
                         <endorseddirs>${endorsed.dir}</endorseddirs>
                     </compilerArguments>
+                    <compilerArgs>
+                        <!-- Comment in (and dont forget out) as required -->
+                        <!-- <arg>-verbose</arg>-->
+                        <!-- <arg>-Xlint:unchecked</arg>-->
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>
