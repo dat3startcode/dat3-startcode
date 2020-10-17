@@ -49,6 +49,10 @@ public class EMF_Creator {
             props.setProperty("javax.persistence.jdbc.password", pw);
             props.setProperty("javax.persistence.jdbc.url", connection_str);
             props.setProperty("javax.persistence.jdbc.driver", "com.mysql.cj.jdbc.Driver");
+            
+            //Sets the production log-level to show only potential problems
+            props.setProperty("eclipselink.logging.level","WARNING");
+            props.setProperty("eclipselink.logging.level.sql","WARNING");
             return Persistence.createEntityManagerFactory("pu", props);
         }
 
