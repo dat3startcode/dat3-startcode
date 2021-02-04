@@ -43,7 +43,7 @@ public class Utility {
 //        printAllProperties();
         
         //Test json2DTO and back again
-        String str2 = "{'id':1, 'dummyStr1':'Dette er den første tekst', 'dummyStr2':'Her er den ANDEN'}";
+        String str2 = "{'id':1, 'str1':'Dette er den første tekst', 'str2':'Her er den ANDEN'}";
         RenameMeDTO rmDTO = json2DTO(str2);
         System.out.println(rmDTO);
         

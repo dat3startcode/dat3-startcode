@@ -2,8 +2,10 @@ package facades;
 
 import dtos.RenameMeDTO;
 import entities.RenameMe;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 import utils.EMF_Creator;
 
 /**
@@ -46,7 +48,11 @@ public class FacadeExample {
         } finally {
             em.close();
         }
-        return rm;
+        return new RenameMeDTO(rme);
+    }
+    public RenameMeDTO getById(long id){
+        EntityManager em = emf.createEntityManager();
+        return new RenameMeDTO(em.find(RenameMe.class, id));
     }
     
     //TODO Remove/Change this before use
@@ -60,10 +66,18 @@ public class FacadeExample {
         }
         
     }
+    
+    public List<RenameMeDTO> getAll(){
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<RenameMe> query = em.createQuery("SELECT r FROM RenameMe r", RenameMe.class);
+        List<RenameMe> rms = query.getResultList();
+        return RenameMeDTO.getDtos(rms);
+    }
+    
     public static void main(String[] args) {
-        EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
+        emf = EMF_Creator.createEntityManagerFactory();
         FacadeExample fe = getFacadeExample(emf);
-        
+        fe.getAll().forEach(dto->System.out.println(dto));
     }
 
 }
