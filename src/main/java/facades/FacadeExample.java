@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import utils.EMF_Creator;
 
 /**
  *
@@ -36,6 +37,18 @@ public class FacadeExample {
         return emf.createEntityManager();
     }
     
+    public RenameMe create(RenameMe rm){
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(rm);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return rm;
+    }
+    
     //TODO Remove/Change this before use
     public long getRenameMeCount(){
         EntityManager em = emf.createEntityManager();
@@ -45,6 +58,11 @@ public class FacadeExample {
         }finally{  
             em.close();
         }
+        
+    }
+    public static void main(String[] args) {
+        EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
+        FacadeExample fe = getFacadeExample(emf);
         
     }
 
