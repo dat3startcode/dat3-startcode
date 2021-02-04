@@ -43,6 +43,7 @@ public class EMF_Creator {
             System.out.println("CONNECTION_STR -->" + System.getenv("CONNECTION_STR"));
             String user = System.getenv("USER");
             String pw = System.getenv("PW");
+//            HUSK at ændre databasenavn herinde
             String connection_str = System.getenv("CONNECTION_STR");
             Properties props = new Properties();
             props.setProperty("javax.persistence.jdbc.user", user);

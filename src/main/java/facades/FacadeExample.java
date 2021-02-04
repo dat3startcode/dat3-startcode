@@ -1,10 +1,9 @@
 package facades;
 
+import dtos.RenameMeDTO;
 import entities.RenameMe;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import utils.EMF_Creator;
 
 /**
@@ -37,11 +36,12 @@ public class FacadeExample {
         return emf.createEntityManager();
     }
     
-    public RenameMe create(RenameMe rm){
+    public RenameMeDTO create(RenameMeDTO rm){
+        RenameMe rme = new RenameMe(rm.getDummyStr1(), rm.getDummyStr2());
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.persist(rm);
+            em.persist(rme);
             em.getTransaction().commit();
         } finally {
             em.close();
