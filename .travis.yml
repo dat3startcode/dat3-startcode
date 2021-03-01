@@ -17,6 +17,17 @@ script:
 services:
    - mysql
 
+# safelist: add branches here or remove section if you want builds to happen on all branches
+branches:
+  only:
+  - master
+
+# blocklist: syntax
+# branches:
+#   except:
+#   - legacy
+#   - experimental
+
 before_script:
 
 # TODO Add variable to make it simple to be reusable for all semester projects
