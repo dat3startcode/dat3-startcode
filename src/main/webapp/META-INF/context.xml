@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--<Context path="/jpareststarter"/>-->
 <Context path="/jpareststarter">
-    
-    
-<!--    <Resource name="jdbc/DATABASE1"
+  <!--    <Resource name="jdbc/DATABASE1"
              driverClassName="com.mysql.cj.jdbc.Driver"
              auth="Container"
              url="${CONNECTION_STR}"
