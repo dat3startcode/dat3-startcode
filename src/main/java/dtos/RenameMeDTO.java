@@ -24,7 +24,17 @@ public class RenameMeDTO {
     @Schema(required = true, example = "Any other string")
     private String str2;
 
+    public RenameMeDTO() {
+    }
+
+    
     public RenameMeDTO(String dummyStr1, String dummyStr2) {
+        this.str1 = dummyStr1;
+        this.str2 = dummyStr2;
+    }
+    
+    public RenameMeDTO(int id, String dummyStr1, String dummyStr2) {
+        this.id = id;
         this.str1 = dummyStr1;
         this.str2 = dummyStr2;
     }
@@ -41,20 +51,28 @@ public class RenameMeDTO {
         this.str2 = rm.getDummyStr2();
     }
 
-    public String getDummyStr1() {
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getStr1() {
         return str1;
     }
 
-    public void setDummyStr1(String dummyStr1) {
-        this.str1 = dummyStr1;
+    public void setStr1(String str1) {
+        this.str1 = str1;
     }
 
-    public String getDummyStr2() {
+    public String getStr2() {
         return str2;
     }
 
-    public void setDummyStr2(String dummyStr2) {
-        this.str2 = dummyStr2;
+    public void setStr2(String str2) {
+        this.str2 = str2;
     }
 
     @Override

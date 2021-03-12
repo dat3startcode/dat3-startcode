@@ -17,8 +17,8 @@ import static org.hamcrest.Matchers.equalTo;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.json.simple.JSONObject;
 //Uncomment the line below, to temporarily disable this test
 //@Disabled
 
@@ -80,7 +80,7 @@ public class RenameMeResourceTest {
     @Test
     public void testServerIsUp() {
         System.out.println("Testing is server UP");
-        given().when().get("/xxx").then().statusCode(200);
+        given().when().get("/renameme").then().statusCode(200);
     }
 
     //This test assumes the database contains two rows
@@ -88,7 +88,7 @@ public class RenameMeResourceTest {
     public void testDummyMsg() throws Exception {
         given()
                 .contentType("application/json")
-                .get("/xxx/").then()
+                .get("/renameme/").then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("msg", equalTo("Hello World"));
@@ -98,9 +98,22 @@ public class RenameMeResourceTest {
     public void testCount() throws Exception {
         given()
                 .contentType("application/json")
-                .get("/xxx/count").then()
+                .get("/renameme/3").then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("count", equalTo(2));
+                .body("str1", equalTo("First arg"));
+    }
+    @Test
+    public void testCreateRenameMe() throws Exception {
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("str1", "Heigh-ho, Heigh-ho"); 
+        requestParams.put("str2", "It's home from work we go…");
+        given()
+                .body(requestParams.toJSONString())
+                .contentType("application/json")
+                .post("/renameme").then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("str1", equalTo("Heigh-ho, Heigh-ho"));
     }
 }

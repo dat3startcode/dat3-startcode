@@ -39,7 +39,7 @@ public class FacadeExample {
     }
     
     public RenameMeDTO create(RenameMeDTO rm){
-        RenameMe rme = new RenameMe(rm.getDummyStr1(), rm.getDummyStr2());
+        RenameMe rme = new RenameMe(rm.getStr1(), rm.getStr2());
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();

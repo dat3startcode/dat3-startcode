@@ -2,6 +2,8 @@ package rest;
 
 import java.util.Set;
 import javax.ws.rs.core.Application;
+import io.swagger.v3.jaxrs2.integration.resources.AcceptHeaderOpenApiResource;
+import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
 
 @javax.ws.rs.ApplicationPath("api")
 public class ApplicationConfig extends Application {
@@ -10,6 +12,11 @@ public class ApplicationConfig extends Application {
     public Set<Class<?>> getClasses() {
         Set<Class<?>> resources = new java.util.HashSet<>();
         addRestResourceClasses(resources);
+        
+        //These two Resource Classes are not auto discovered so we add them manually
+        //OPENAPI/SWAGGER
+        resources.add(OpenApiResource.class);
+        resources.add(AcceptHeaderOpenApiResource.class);
         return resources;
     }
 
@@ -21,6 +28,7 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(errorhandling.GenericExceptionMapper.class);
+        resources.add(org.glassfish.jersey.server.wadl.internal.WadlResource.class);
         resources.add(rest.RenameMeResource.class);
     }
     

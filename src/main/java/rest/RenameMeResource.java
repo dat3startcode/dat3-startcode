@@ -15,37 +15,40 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.persistence.EntityManagerFactory;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
 //Todo Remove or change relevant parts before ACTUAL use
 @OpenAPIDefinition(
             info = @Info(
-                    title = "Simple Movie API",
+                    title = "Simple RenameMe API",
                     version = "0.4",
-                    description = "Simple API to get info about movies.",        
-                    contact = @Contact( name = "Lars Mortensen", email = "lam@cphbusiness.dk")
+                    description = "Simple API to use as start code for backend web projects.",        
+                    contact = @Contact( name = "Thomas Hartmann", email = "tha@cphbusiness.dk")
             ),
-          tags = {
-                    @Tag(name = "movie", description = "API related to Movie Info")
+            tags = {
+                    @Tag(name = "renameme", description = "API base example")
               
             },
             servers = {
                     @Server(
                             description = "For Local host testing",
-                            url = "http://localhost:8080/startcodeoas"
+                            url = "http://localhost:8080/sem3openapi"
                     ),
                     @Server(
                             description = "Server API",
-                            url = "http://mydroplet"
+                            url = "https://mydropletondigitalocean.dk"
                     )
                           
             }
 )
-@Path("xxx")
+@Path("renameme")
 public class RenameMeResource {
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
@@ -53,23 +56,18 @@ public class RenameMeResource {
     private static final FacadeExample FACADE = FacadeExample.getFacadeExample(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
+
+    @Operation(summary = "Test connection",
+            tags = {"renameme"})
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public String demo() {
         return "{\"msg\":\"Hello World\"}";
     }
 
-    @Path("count")
-    @GET
-    @Produces({MediaType.APPLICATION_JSON})
-    public String getRenameMeCount() {
-        long count = FACADE.getRenameMeCount();
-        //System.out.println("--------------->"+count);
-        return "{\"count\":" + count + "}";  //Done manually so no need for a DTO
-    }
 
-    @Operation(summary = "Get Movie info by ID",
-            tags = {"movie"},
+    @Operation(summary = "Get RenameMe info by ID",
+            tags = {"renameme"},
             responses = {
                      @ApiResponse(
                      content = @Content(mediaType = "application/json",schema = @Schema(implementation = RenameMeDTO.class))),
@@ -78,8 +76,27 @@ public class RenameMeResource {
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public RenameMeDTO getMovieInfo(@PathParam("id") int id) {
-        return new RenameMeDTO("First arg", "Second arg");
+    public RenameMeDTO getRenameMeById(@PathParam("id") int id) {
+        return new RenameMeDTO(id, "First arg", "Second arg");
     }
-
+    
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Get RenameMe info by ID",
+            tags = {"renameme"},
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "The Newly created Movie"),                       
+                    @ApiResponse(responseCode = "400", description = "Not all arguments provided with the body")
+            }
+    )
+    public RenameMeDTO createRenameMe(RenameMeDTO rm){
+        if(rm.getStr1() == null || rm.getStr2() == null){
+            throw new WebApplicationException("Not all required arguments included",400);
+        }
+        rm.setId(4);
+        System.out.println(rm);
+        return rm;
+        
+    }
 }
