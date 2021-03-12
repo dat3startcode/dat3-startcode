@@ -8,27 +8,32 @@ package dtos;
 import entities.RenameMe;
 import java.util.ArrayList;
 import java.util.List;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  *
  * @author tha
  */
+@Schema(name = "RenameMe")  //Because of this we could call the class anything we like
 public class RenameMeDTO {
+
+    @Schema(required = false, example = "3")
     private long id;
+    @Schema(required = true, example = "Any string")
     private String str1;
+    @Schema(required = true, example = "Any other string")
     private String str2;
 
     public RenameMeDTO(String dummyStr1, String dummyStr2) {
         this.str1 = dummyStr1;
         this.str2 = dummyStr2;
     }
-    
-    public static List<RenameMeDTO> getDtos(List<RenameMe> rms){
+
+    public static List<RenameMeDTO> getDtos(List<RenameMe> rms) {
         List<RenameMeDTO> rmdtos = new ArrayList();
-        rms.forEach(rm->rmdtos.add(new RenameMeDTO(rm)));
+        rms.forEach(rm -> rmdtos.add(new RenameMeDTO(rm)));
         return rmdtos;
     }
-
 
     public RenameMeDTO(RenameMe rm) {
         this.id = rm.getId();
@@ -56,10 +61,5 @@ public class RenameMeDTO {
     public String toString() {
         return "RenameMeDTO{" + "id=" + id + ", str1=" + str1 + ", str2=" + str2 + '}';
     }
-    
-    
-    
-    
-    
-    
+
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--<Context path="/jpareststarter"/>-->
-<Context path="/jpareststarter">
+<Context path="/sem3openapi">
     
     
 <!--    <Resource name="jdbc/DATABASE1"
