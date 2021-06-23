@@ -17,7 +17,10 @@
         <!-- IMPORTANT-1: If your server uses https (via NGINX) use your DOMAIN NAME and https below: -->
         <!-- IMPORTANT-2: Observe we are NOT using /manager/html but /manager/text for script uploads --> 
 	<remote.server>https://www.cphdat.dk/manager/text</remote.server>
-        
+
+        <!-- TODO: Add your own database name -->
+        <!-- IMPORTANT-1: The database should exist on your droplet -->
+        <db.name>startcode</db.name>
     </properties>
     
     <dependencies>
@@ -91,6 +94,13 @@
             <artifactId>rest-assured</artifactId>
             <version>4.3.1</version>
             <scope>test</scope>
+        </dependency>
+
+        <!-- Used for setting database name in pom.xml -->
+        <dependency>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>properties-maven-plugin</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
     </dependencies>
@@ -176,6 +186,22 @@
                                     <type>jar</type>
                                 </artifactItem>
                             </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>write-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <outputFile>${project.build.outputDirectory}/properties-from-pom.properties</outputFile>
                         </configuration>
                     </execution>
                 </executions>
