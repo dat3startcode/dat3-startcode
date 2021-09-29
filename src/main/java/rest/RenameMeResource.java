@@ -72,7 +72,7 @@ public class RenameMeResource {
                      @ApiResponse(
                      content = @Content(mediaType = "application/json",schema = @Schema(implementation = RenameMeDTO.class))),
                     @ApiResponse(responseCode = "200", description = "The Requested Movie"),                       
-                    @ApiResponse(responseCode = "400", description = "Movie not found")})
+                    @ApiResponse(responseCode = "400", description = "Entity not found")})
     @GET
 
     @Path("{id}")
