@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/dat3startcode/dat3-startcode.svg?branch=master)](https://travis-ci.org/dat3startcode/dat3-startcode)
 
 *This project is meant as start code for projects and exercises given in Flow-1+2 (+3 using the security-branch) at http://cphbusiness.dk in the Study Program "AP degree in Computer Science"*
 
@@ -7,6 +6,13 @@
 - *Testing, including database test*
 - *Testing, including tests of REST-API's*
 - *CI and CONTINUOUS DELIVERY*
+
+## Flow 2 week 1
+In this week we begin using json errormessages. The folder errorhandling is added to the project containing: 
+- ExceptionDTO
+- GenericExceptionMapper
+With that addition, error message will be converted to json when a rest endpoint is called. Even a 404.
+Execute > git clone -b errorhandling git@github.com:dat3startcode/dat3-startcode.git to clone the version of the startcode with errorhandling
 
 ### Preconditions
 *In order to use this code, you should have a local developer setup + a "matching" droplet on Digital Ocean as described in the 3. semester guidelines* 
@@ -42,5 +48,4 @@ This version of the start code is meant for show casing the swagger / openapi. T
             <artifactId>org.json.simple</artifactId>
             <version>0.4</version>
         </dependency>
-        <dependency>
 ```

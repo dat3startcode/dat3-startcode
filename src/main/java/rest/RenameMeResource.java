@@ -74,6 +74,7 @@ public class RenameMeResource {
                     @ApiResponse(responseCode = "200", description = "The Requested Movie"),                       
                     @ApiResponse(responseCode = "400", description = "Movie not found")})
     @GET
+
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public RenameMeDTO getRenameMeById(@PathParam("id") int id) {
@@ -97,6 +98,6 @@ public class RenameMeResource {
         rm.setId(4);
         System.out.println(rm);
         return rm;
-        
+
     }
 }

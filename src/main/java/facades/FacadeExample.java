@@ -64,7 +64,6 @@ public class FacadeExample {
         }finally{  
             em.close();
         }
-        
     }
     
     public List<RenameMeDTO> getAll(){

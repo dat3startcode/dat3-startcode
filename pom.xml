@@ -16,8 +16,11 @@
         <!-- TODO: Add the URL to your own tomcat server. Used to deploy your WAR-file -->
         <!-- IMPORTANT-1: If your server uses https (via NGINX) use your DOMAIN NAME and https below: -->
         <!-- IMPORTANT-2: Observe we are NOT using /manager/html but /manager/text for script uploads --> 
-        <remote.server>http://46.101.204.76:8081/manager/text</remote.server>
-        
+	<remote.server>https://www.cphdat.dk/manager/text</remote.server>
+
+        <!-- TODO: Add your own database name -->
+        <!-- IMPORTANT-1: The database should exist on your droplet -->
+        <db.name>startcode</db.name>
     </properties>
     
     <dependencies>
@@ -31,7 +34,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.17</version>
+            <version>8.0.26</version>
         </dependency>
       
         <dependency>
@@ -109,6 +112,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Used for setting database name in pom.xml -->
+        <dependency>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>properties-maven-plugin</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -130,6 +140,7 @@
             
             <!--This is used to enable @BeforeAll etc used in jUnit 5 -->
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.21.0</version>
                 <dependencies>
@@ -192,6 +203,22 @@
                                     <type>jar</type>
                                 </artifactItem>
                             </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>write-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <outputFile>${project.build.outputDirectory}/properties-from-pom.properties</outputFile>
                         </configuration>
                     </execution>
                 </executions>
