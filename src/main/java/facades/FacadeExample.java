@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+
+import errorhandling.RenameMeNotFoundException;
 import utils.EMF_Creator;
 
 /**
@@ -40,7 +42,7 @@ public class FacadeExample {
     
     public RenameMeDTO create(RenameMeDTO rm){
         RenameMe rme = new RenameMe(rm.getDummyStr1(), rm.getDummyStr2());
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
             em.persist(rme);
@@ -50,14 +52,17 @@ public class FacadeExample {
         }
         return new RenameMeDTO(rme);
     }
-    public RenameMeDTO getById(long id){
+    public RenameMeDTO getById(long id) { //throws RenameMeNotFoundException {
         EntityManager em = emf.createEntityManager();
-        return new RenameMeDTO(em.find(RenameMe.class, id));
+        RenameMe rm = em.find(RenameMe.class, id);
+//        if (rm == null)
+//            throw new RenameMeNotFoundException("The RenameMe entity with ID: "+id+" Was not found");
+        return new RenameMeDTO(rm);
     }
     
     //TODO Remove/Change this before use
     public long getRenameMeCount(){
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = getEntityManager();
         try{
             long renameMeCount = (long)em.createQuery("SELECT COUNT(r) FROM RenameMe r").getSingleResult();
             return renameMeCount;
