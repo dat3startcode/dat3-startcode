@@ -31,7 +31,8 @@ public class RenameMeDTO {
 
 
     public RenameMeDTO(RenameMe rm) {
-        this.id = rm.getId();
+        if(rm.getId() != null)
+            this.id = rm.getId();
         this.str1 = rm.getDummyStr1();
         this.str2 = rm.getDummyStr2();
     }

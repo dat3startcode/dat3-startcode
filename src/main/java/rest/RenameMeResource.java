@@ -2,13 +2,17 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dtos.RenameMeDTO;
+import errorhandling.RenameMeNotFoundException;
 import utils.EMF_Creator;
 import facades.FacadeExample;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 //Todo Remove or change relevant parts before ACTUAL use
 @Path("xxx")
@@ -32,5 +36,11 @@ public class RenameMeResource {
         long count = FACADE.getRenameMeCount();
         //System.out.println("--------------->"+count);
         return "{\"count\":"+count+"}";  //Done manually so no need for a DTO
+    }
+    @GET
+    @Path("{id}")
+    public Response getById(@PathParam("id") long id) throws RenameMeNotFoundException {
+        RenameMeDTO rdto = FACADE.getById(id);
+        return Response.ok().entity(rdto).build();
     }
 }
