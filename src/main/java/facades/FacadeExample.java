@@ -7,7 +7,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 
-//import errorhandling.RenameMeNotFoundException;
+import errorhandling.RenameMeNotFoundException;
+
 import utils.EMF_Creator;
 
 /**
@@ -52,11 +53,12 @@ public class FacadeExample {
         }
         return new RenameMeDTO(rme);
     }
-    public RenameMeDTO getById(long id) { //throws RenameMeNotFoundException {
+
+    public RenameMeDTO getById(long id) throws RenameMeNotFoundException {
         EntityManager em = emf.createEntityManager();
         RenameMe rm = em.find(RenameMe.class, id);
-//        if (rm == null)
-//            throw new RenameMeNotFoundException("The RenameMe entity with ID: "+id+" Was not found");
+        if (rm == null)
+            throw new RenameMeNotFoundException("The RenameMe entity with ID: "+id+" Was not found");
         return new RenameMeDTO(rm);
     }
     
