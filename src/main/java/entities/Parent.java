@@ -13,6 +13,7 @@ public class Parent {
     private int id;
     private String name;
     private Integer age;
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.PERSIST)
     private List<Child> children;
 
     public Parent() {}
@@ -73,7 +74,7 @@ public class Parent {
         return result;
     }
 
-    @OneToMany(mappedBy = "parent")
+
     public List<Child> getChildren() {
         return children;
     }

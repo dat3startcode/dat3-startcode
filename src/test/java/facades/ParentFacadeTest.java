@@ -1,5 +1,6 @@
 package facades;
 
+import entities.Child;
 import entities.Parent;
 import entities.RenameMe;
 import errorhandling.EntityNotFoundException;
@@ -16,6 +17,7 @@ class ParentFacadeTest {
     private static EntityManagerFactory emf;
     private static ParentFacade facade;
     Parent p1,p2;
+    Child c1,c2;
 
     @BeforeAll
     public static void setUpClass() {
@@ -38,9 +40,12 @@ class ParentFacadeTest {
             em.createNamedQuery("Parent.deleteAllRows").executeUpdate();
             p1 = new Parent("Daddy", 55);
             p2 = new Parent("Mommy", 50);
+            c1 = new Child("Dorthea", 3);
+            c2 = new Child("Frederik", 6);
             em.persist(p1);
             em.persist(p2);
-
+            em.persist(c1);
+            em.persist(c2);
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -58,6 +63,28 @@ class ParentFacadeTest {
     void create() {
         System.out.println("Testing create(Parent p)");
         Parent p = new Parent("TestParent",10);
+        Parent expected = p;
+        Parent actual   = facade.create(p);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void createWithChildren() {
+        System.out.println("Testing create(Parent p) with children added");
+        Parent p = new Parent("TestParent",10);
+        p.addChild(new Child("Alfred",10));
+        p.addChild(new Child("Roberta",8));
+        Parent expected = p;
+        Parent actual   = facade.create(p);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void createWithKnownChildren() {
+        System.out.println("Testing create(Parent p) with children added");
+        Parent p = new Parent("TestParent",10);
+        p.addChild(c1);
+        p.addChild(c2);
         Parent expected = p;
         Parent actual   = facade.create(p);
         assertEquals(expected, actual);
@@ -85,6 +112,17 @@ class ParentFacadeTest {
         p2.setAge(65);
         Parent expected = p2;
         Parent actual = facade.update(p2);
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    void updateWithChildren() throws EntityNotFoundException {
+        System.out.println("Testing Update(Parent p) with known children");
+        p2.addChild(c1);
+        p2.addChild(c2);
+        Parent p = facade.update(p2);
+        int expected = 2;
+        int actual = p.getChildren().size();
         assertEquals(expected,actual);
     }
 

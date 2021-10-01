@@ -70,3 +70,8 @@ This document explains how to use this code (build, test and deploy), locally wi
   - expected
   - actual
 - Make the assertion
+- Create several tests for each method where different things can happen like:
+  - Test for thrown exception
+  - Test for entity update with new relationships
+  - Test for entity update with detached objects
+- 
