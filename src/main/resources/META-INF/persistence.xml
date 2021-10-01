@@ -4,6 +4,8 @@
     <!-- DO NOT RENAME THE PERSISTENCE UNIT -->
     <persistence-unit name="pu" transaction-type="RESOURCE_LOCAL">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <class>entities.Child</class>
+        <class>entities.Parent</class>
         <!--    <class>entities.RenameMe</class>-->
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
@@ -24,9 +26,6 @@
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/startcode?serverTimezone=UTC"/>
             <property name="javax.persistence.jdbc.user" value="dev"/>
             <property name="javax.persistence.jdbc.password" value="ax2"/>
-            <property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/startcode"/>
-            <property name="eclipselink.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-
         </properties>
     </persistence-unit>
     
@@ -44,14 +43,7 @@
             <property name="javax.persistence.jdbc.user" value="dev"/>
             <property name="javax.persistence.jdbc.password" value="ax2"/>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
-            
-             <!-- You can raise the logging level to one of the following values CONFIG, FINE, FINER, FINEST, ALL for better,
-                 but also more verbose, log-info -->
-            <property name="eclipselink.logging.level" value="INFO"/>
-            <property name="eclipselink.logging.level.sql" value="INFO"/>
-            <property name="eclipselink.logging.parameters" value="true"/>
-            <property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/startcode"/>
-            <property name="eclipselink.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+
         </properties>
     </persistence-unit>
 </persistence>

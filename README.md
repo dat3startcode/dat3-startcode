@@ -21,7 +21,7 @@ This document explains how to use this code (build, test and deploy), locally wi
 
 ### Setup in Intellij
 - open view->too windows->persistence
-- open the Database tab and create a new data source (remember to point to a database event though this is already written in the persistence unit. This is necessary in order to use the JPQL console)
+- open the Database tab and create a new data source (remember to point to a database even though this is already written in the persistence unit. This is necessary in order to use the Persistence window)
 - in the persistence window right click the pu or an entity and choose "console"
 - write a jpql query in the console and execute it.
 ### In netbeans it is much simpler
@@ -52,9 +52,21 @@ This document explains how to use this code (build, test and deploy), locally wi
   - tick tables to include
   - open tables to see columns and add the ones with mapped type: Collection<SomeEntity> and SomeEntity
   - click OK.
-
+- Tidy up
+  - add under @id annotation: @GeneratedValue(strategy = GenerationType.IDENTITY)
+  - optionally add under @Entity: @NamedQuery(name = "RenameMe.deleteAllRows", query = "DELETE from RenameMe") and change RenameMe to the Class name.
+  - add no-args default constructors
+  - add any convenient constructors for your entity
+  - add getters and setters for all fields
 ### In netbeans it is much easier
 - Right click project name -> new -> persistence -> Entity classes From Database -> choose database connection from list -> add the tables you need -> Finish
 
-
-
+### Setup new test class in Intellij
+- Put carret in the class name line -> alt+enter -> create Test
+- Choose which methods to test
+- Copy paste From FacadeExampleTest all the @Before and After methods and change code inside to the right Entity type
+- Create a System.out.println in each of the test method telling what is being tested
+- Create 2 variable initializations
+  - expected
+  - actual
+- Make the assertion

@@ -3,7 +3,7 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dtos.RenameMeDTO;
-import errorhandling.RenameMeNotFoundException;
+import errorhandling.EntityNotFoundException;
 import utils.EMF_Creator;
 import facades.FacadeExample;
 import javax.persistence.EntityManagerFactory;
@@ -39,7 +39,7 @@ public class RenameMeResource {
     }
     @GET
     @Path("{id}")
-    public Response getById(@PathParam("id") long id) throws RenameMeNotFoundException {
+    public Response getById(@PathParam("id") long id) throws EntityNotFoundException {
         RenameMeDTO rdto = FACADE.getById(id);
         return Response.ok().entity(rdto).build();
     }
