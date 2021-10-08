@@ -1,6 +1,8 @@
 package entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NamedQuery(name = "Child.deleteAllRows", query = "DELETE from Child")
@@ -11,13 +13,19 @@ public class Child {
     private int id;
     private String name;
     private Integer age;
+    @ManyToOne
+    @JoinColumn(name = "parent_id", referencedColumnName = "id", nullable = false)
     private Parent parent;
 
-    public Child() {}
+    @ManyToMany(mappedBy = "children") //, cascade = CascadeType.PERSIST) //, fetch = FetchType.EAGER) //Target side of relationsship (inverse side)
+    private List<Toy> toys;
+
+    public Child() { }
 
     public Child(String name, Integer age) {
         this.name = name;
         this.age = age;
+        this.toys = new ArrayList<>();
     }
 
     public int getId() {
@@ -70,13 +78,26 @@ public class Child {
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "parent_id", referencedColumnName = "id", nullable = false)
     public Parent getParent() {
         return parent;
     }
 
     public void setParent(Parent parent) {
         this.parent = parent;
+    }
+
+    public List<Toy> getToys() {
+        return toys;
+    }
+
+    public void setToys(List<Toy> toys) {
+        this.toys = toys;
+    }
+
+    public void addToy(Toy toy) {
+        this.toys.add(toy);
+        if(!toy.getChildren().contains(this)){
+            toy.addChildren(this);
+        }
     }
 }
