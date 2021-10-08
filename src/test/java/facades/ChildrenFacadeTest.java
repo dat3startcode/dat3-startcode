@@ -60,7 +60,6 @@ class ChildrenFacadeTest {
             em.persist(t1);
             em.persist(t2);
             em.getTransaction().commit();
-            System.out.println(t1.getId());
         } finally {
             em.close();
         }
@@ -165,9 +164,8 @@ class ChildrenFacadeTest {
         int expected = 2;
         int actual = c.getToys().size();
         assertEquals(expected,actual);
-        long expected2 = 2;
-        long actual2 =  (long) emf.createEntityManager().createNativeQuery("SELECT COUNT(*) FROM TOY").getSingleResult();
-        assertEquals(expected2,actual2,"No duplicate toys");
+        actual = (int)(long) emf.createEntityManager().createNativeQuery("SELECT COUNT(*) FROM TOY").getSingleResult();
+        assertEquals(expected, actual,"Testing for duplicate toys");
     }
 
     @Test
