@@ -6,9 +6,12 @@
 package facades;
 
 import dtos.RenameMeDTO;
+import entities.Child;
 import entities.Parent;
 import entities.RenameMe;
 import javax.persistence.EntityManagerFactory;
+
+import entities.Toy;
 import utils.EMF_Creator;
 
 /**
@@ -18,16 +21,26 @@ import utils.EMF_Creator;
 public class Populator {
     public static void populate(){
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
-        ParentFacade pf = ParentFacade.getParentFacade(emf);
-        pf.create(new Parent("Henrik",76));
-        pf.create(new Parent("Betty",76));
+        IDataFacade pf = ParentFacade.getParentFacade(emf);
+        Parent p1 = new Parent("Henrik",76);
+        Parent p2 = new Parent("Betty",76);
+        Child c1 = new Child("Hassan", 10);
+        Child c2 = new Child("Josephine",5);
+        Toy t1 = new Toy("Chess board", 2);
+        Toy t2 = new Toy("Lego Friends set",3);
+        p1.addChild(c1);
+        p1.addChild(c2);
+        c1.addToy(t1);
+        c1.addToy(t2);
+        pf.create(p1);
+        pf.create(p2);
 
     }
     
     public static void main(String[] args) {
         populate();
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
-        ParentFacade pf = ParentFacade.getParentFacade(emf);
+        IDataFacade pf = ParentFacade.getParentFacade(emf);
         pf.getAll().forEach(System.out::println);
     }
 }

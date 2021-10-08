@@ -1,8 +1,10 @@
 package facades;
 
 import dtos.RenameMeDTO;
+import entities.Child;
 import entities.Parent;
 import entities.RenameMe;
+import entities.Toy;
 import errorhandling.EntityNotFoundException;
 import utils.EMF_Creator;
 
@@ -31,7 +33,7 @@ public class ParentFacade implements IDataFacade<Parent> {
      * @param _emf
      * @return an instance of this facade class.
      */
-    public static ParentFacade getParentFacade(EntityManagerFactory _emf) {
+    public static IDataFacade<Parent> getParentFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
             instance = new ParentFacade();
@@ -47,6 +49,20 @@ public class ParentFacade implements IDataFacade<Parent> {
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
+            p.getChildren().forEach(child->{
+                if(child.getId()!=0)
+                    child = em.find(Child.class,child.getId());
+                else {
+                    child.getToys().forEach(toy->{
+                        if(toy.getId()!=0)
+                            toy = em.find(Toy.class, toy.getId());
+                        else {
+                            em.persist(toy);
+                        }
+                    });
+                    em.persist(child);
+                }
+            });
             em.persist(p);
             em.getTransaction().commit();
         } finally {
@@ -95,7 +111,7 @@ public class ParentFacade implements IDataFacade<Parent> {
 
     public static void main(String[] args) {
         emf = EMF_Creator.createEntityManagerFactory();
-        ParentFacade fe = getParentFacade(emf);
+        IDataFacade fe = getParentFacade(emf);
         fe.getAll().forEach(dto->System.out.println(dto));
     }
 

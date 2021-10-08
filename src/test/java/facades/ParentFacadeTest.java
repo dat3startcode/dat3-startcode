@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ParentFacadeTest {
 
     private static EntityManagerFactory emf;
-    private static ParentFacade facade;
+    private static IDataFacade<Parent> facade;
     Parent p1,p2;
     Child c1,c2;
 
@@ -28,6 +28,7 @@ class ParentFacadeTest {
     @AfterAll
     public static void tearDownClass() {
 //        Clean up database after test is done or use a persistence unit with drop-and-create to start up clean on every test
+        emf.close();
     }
 
     // Setup the DataBase in a known state BEFORE EACH TEST
@@ -55,7 +56,7 @@ class ParentFacadeTest {
     @AfterEach
     public void tearDown() {
 //        Remove any data after each test was run
-        emf.close();
+//        emf.close();
     }
 
 
