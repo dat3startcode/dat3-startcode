@@ -1,0 +1,6 @@
+GET http://localhost:8080/rest-snippets/api/parent/count
+Accept: application/json
+
+###
+GET http://localhost:8080/rest-snippets/api/parent/3
+Accept: application/json

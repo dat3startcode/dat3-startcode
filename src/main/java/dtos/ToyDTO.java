@@ -1,5 +1,6 @@
 package dtos;
 
+import entities.Parent;
 import entities.Toy;
 
 import java.util.ArrayList;
@@ -17,6 +18,9 @@ public class ToyDTO {
         this.name = toy.getName();
         this.age = toy.getAge();
         toy.getChildren().forEach(child->this.children.add(child.getId()));
+    }
+    public Toy getEntity(){
+        return new Toy(this.name, this.age);
     }
 
     public int getId() {

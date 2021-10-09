@@ -90,6 +90,8 @@ public class ParentFacade implements IDataFacade<Parent> {
 
     @Override
     public Parent update(Parent parent) throws EntityNotFoundException {
+        if (parent.getId() == 0)
+            throw new IllegalArgumentException("No Parent can be updated when id is missing");
         EntityManager em = getEntityManager();
         em.getTransaction().begin();
         Parent p = em.merge(parent);
