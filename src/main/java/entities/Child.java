@@ -14,7 +14,7 @@ public class Child {
     private String name;
     private Integer age;
     @ManyToOne
-    @JoinColumn(name = "parent_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "parent_id", referencedColumnName = "id") //, nullable = false)
     private Parent parent;
 
     @ManyToMany(mappedBy = "children") //, cascade = CascadeType.PERSIST) //, fetch = FetchType.EAGER) //Target side of relationsship (inverse side)

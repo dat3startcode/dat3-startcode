@@ -14,14 +14,14 @@ import java.util.logging.Logger;
 
 
     @Provider
-    public class RenameMeNotFoundExceptionMapper implements ExceptionMapper<EntityNotFoundException>{
+    public class EntityNotFoundExceptionMapper implements ExceptionMapper<EntityNotFoundException>{
         static Gson gson = new GsonBuilder().setPrettyPrinting().create();
         @Context
         ServletContext context;
 
         @Override
         public Response toResponse(EntityNotFoundException ex) {
-            Logger.getLogger(errorhandling.RenameMeNotFoundExceptionMapper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EntityNotFoundExceptionMapper.class.getName()).log(Level.SEVERE, null, ex);
             ExceptionDTO err = new ExceptionDTO(404, ex.getMessage());
 
             return Response.status(404)

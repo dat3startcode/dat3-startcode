@@ -127,7 +127,7 @@ public class ParentResourceTest {
     }
 
     @Test
-    public void testGetById() throws Exception {
+    public void testGetById()  {
         given()
                 .contentType(ContentType.JSON)
 //                .pathParam("id", p1.getId()).when()
@@ -139,6 +139,20 @@ public class ParentResourceTest {
                 .body("name", equalTo(p1.getName()))
                 .body("children", hasItems(hasEntry("name","Joseph"),hasEntry("name","Alberta")));
     }
+
+    @Test
+    public void testError() {
+        given()
+                .contentType(ContentType.JSON)
+//                .pathParam("id", p1.getId()).when()
+                .get("/parent/{id}",999999999)
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.NOT_FOUND_404.getStatusCode())
+                .body("code", equalTo(404))
+                .body("message", equalTo("The Parent entity with ID: 999999999 Was not found"));
+    }
+
     @Test
     public void testPrintResponse(){
         Response response = given().when().get("/parent/"+p1.getId());

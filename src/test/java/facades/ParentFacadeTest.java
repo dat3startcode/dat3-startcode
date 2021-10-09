@@ -38,6 +38,8 @@ class ParentFacadeTest {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
+            em.createNamedQuery("Toy.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Child.deleteAllRows").executeUpdate();
             em.createNamedQuery("Parent.deleteAllRows").executeUpdate();
             p1 = new Parent("Daddy", 55);
             p2 = new Parent("Mommy", 50);

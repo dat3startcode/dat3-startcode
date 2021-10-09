@@ -76,7 +76,7 @@ public class ParentFacade implements IDataFacade<Parent> {
         EntityManager em = getEntityManager();
         Parent p = em.find(Parent.class, id);
         if (p == null)
-            throw new EntityNotFoundException("The RenameMe entity with ID: "+id+" Was not found");
+            throw new EntityNotFoundException("The Parent entity with ID: "+id+" Was not found");
         return p;
     }
 
