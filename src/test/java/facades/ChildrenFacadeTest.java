@@ -52,8 +52,8 @@ class ChildrenFacadeTest {
 
             c1 = new Child("Dorthea", 3);
             c2 = new Child("Frederik", 6);
-            t1 = new Toy("Lego batman set",3);
-            t2 = new Toy("Doll house",4);
+            t1 = new Toy("Lego batman set",3, 10.00);
+            t2 = new Toy("Doll house",4, 20.00);
 
             em.persist(c1);
             em.persist(c2);
@@ -84,8 +84,8 @@ class ChildrenFacadeTest {
     void createWithNewToys() {
         System.out.println("Testing create(Child c) with new toys added. Child has CascadeType.PERSIST to Toy");
         Child c = new Child("TestChild",10);
-        c.addToy(new Toy("Balloon castle",10));
-        c.addToy(new Toy("Chess board",8));
+        c.addToy(new Toy("Balloon castle",10, 20.00));
+        c.addToy(new Toy("Chess board",8, 50.00));
         facade.create(c);
         int expected = 4;
         long actual = (Long) emf.createEntityManager().createNativeQuery("SELECT COUNT(*) FROM TOY").getSingleResult();
@@ -96,8 +96,8 @@ class ChildrenFacadeTest {
     void createWithPersist() {
         System.out.println("Testing create(Child c) with new toys added. 2 toys should be persisted along with the child");
         Child c = new Child("TestChild",10);
-        c.addToy(new Toy("Balloon castle",10));
-        c.addToy(new Toy("Chess board",8));
+        c.addToy(new Toy("Balloon castle",10, 30.00));
+        c.addToy(new Toy("Chess board",8, 40.00));
         facade.create(c);
         int expected = 4;
         long actual = (Long) emf.createEntityManager().createNativeQuery("SELECT COUNT(*) FROM TOY").getSingleResult();
@@ -108,8 +108,8 @@ class ChildrenFacadeTest {
     void createWithNewToys2() {
         System.out.println("Testing create(Child c) with toys added and check if toys are in fact added");
         Child c = new Child("TestChild",10);
-        c.addToy(new Toy("Ballon castle",10));
-        c.addToy(new Toy("Chess board",8));
+        c.addToy(new Toy("Ballon castle",10, 30.00));
+        c.addToy(new Toy("Chess board",8, 60.00));
         List<Toy> result   = facade.create(c).getToys();
         assertThat(result, containsInAnyOrder(
                 hasProperty("name", is("Ballon castle")),

@@ -14,6 +14,7 @@ public class Toy {
     private int id;
     private String name;
     private Integer age;
+    private Double price;
 
     @ManyToMany
     @JoinTable( // This is now the owner side of the relationsship
@@ -24,9 +25,10 @@ public class Toy {
 
     public Toy() {}
 
-    public Toy(String name, Integer age) {
+    public Toy(String name, Integer age, Double price) {
         this.name = name;
         this.age = age;
+        this.price = price;
         this.children = new ArrayList<>();
     }
 

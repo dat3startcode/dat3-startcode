@@ -1,5 +1,6 @@
 package facades;
 
+import entities.Child;
 import entities.Parent;
 import entities.Toy;
 
@@ -10,5 +11,7 @@ public interface IExtraFunc {
     Long countAllToys();
     List<Toy> getToysByParent(Parent p);
     List<Parent> getParentsByToyId(int id);
-
+    List<Parent> getParentsOfChildrenBetweenAge(int minYear, int maxYear);
+    Parent getParentWithMostToys();
+    Child getChildWithMostExpensiveToysTotal();
 }

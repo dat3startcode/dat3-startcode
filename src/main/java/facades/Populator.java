@@ -26,8 +26,8 @@ public class Populator {
         Parent p2 = new Parent("Betty",76);
         Child c1 = new Child("Hassan", 10);
         Child c2 = new Child("Josephine",5);
-        Toy t1 = new Toy("Chess board", 2);
-        Toy t2 = new Toy("Lego Friends set",3);
+        Toy t1 = new Toy("Chess board", 2, 100.00);
+        Toy t2 = new Toy("Lego Friends set",3, 40.00);
         p1.addChild(c1);
         p1.addChild(c2);
         c1.addToy(t1);
