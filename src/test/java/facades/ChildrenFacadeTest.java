@@ -82,7 +82,7 @@ class ChildrenFacadeTest {
 
     @Test
     void createWithNewToys() {
-        System.out.println("Testing create(Child c) with new toys added. Child has CascadeType.PERSIST to Toy");
+        System.out.println("Testing create(Child c) with new toys added.");
         Child c = new Child("TestChild",10);
         c.addToy(new Toy("Balloon castle",10, 20.00));
         c.addToy(new Toy("Chess board",8, 50.00));

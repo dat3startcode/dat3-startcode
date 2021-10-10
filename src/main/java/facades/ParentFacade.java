@@ -1,9 +1,7 @@
 package facades;
 
-import dtos.RenameMeDTO;
 import entities.Child;
 import entities.Parent;
-import entities.RenameMe;
 import entities.Toy;
 import errorhandling.EntityNotFoundException;
 import utils.EMF_Creator;
