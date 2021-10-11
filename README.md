@@ -6,7 +6,7 @@
 - open the Database tab and create a new data source (remember to point to a database even though this is already written in the persistence unit. This is necessary in order to use the Persistence window)
 - in the persistence window right click the pu or an entity and choose "console"
 - write a jpql query in the console and execute it.
-### In netbeans it is much simpler
+### In netbeans
 - just right click the pu and choose: "Run JPQL query"
 
 ### Create model in workbench (cannot be done from Intellij - No model designer yet)
@@ -40,7 +40,7 @@
   - add no-args default constructors
   - add any convenient constructors for your entity
   - add getters and setters for all fields
-### In netbeans it is much easier
+### In netbeans
 - Right click project name -> new -> persistence -> Entity classes From Database -> choose database connection from list -> add the tables you need -> Finish
 
 ### Setup new test class in Intellij

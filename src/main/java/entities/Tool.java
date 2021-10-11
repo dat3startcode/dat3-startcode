@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@NamedQuery(name = "Toy.deleteAllRows", query = "DELETE from Toy")
-public class Toy {
+@NamedQuery(name = "Tool.deleteAllRows", query = "DELETE from Tool")
+public class Tool {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,24 +16,20 @@ public class Toy {
     private Integer age;
     private Double price;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable( // This is now the owner side of the relationsship
-            name = "children_toys",
-            joinColumns = @JoinColumn(name = "child_id"),
-            inverseJoinColumns = @JoinColumn(name = "toy_id"))
-    private List<Child> children;
+            name = "toys_tools",
+            joinColumns = @JoinColumn(name = "toy_id"),
+            inverseJoinColumns = @JoinColumn(name = "tool_id"))
+    private List<Toy> toys;
 
-    @ManyToMany (mappedBy = "toys", cascade = CascadeType.ALL)
-    private List<Tool> tools;
+    public Tool() {}
 
-    public Toy() {}
-
-    public Toy(String name, Integer age, Double price) {
+    public Tool(String name, Integer age, Double price) {
         this.name = name;
         this.age = age;
         this.price = price;
-        this.children = new ArrayList<>();
-        this.tools = new ArrayList<>();
+        this.toys = new ArrayList<>();
     }
 
     public int getId() {
@@ -64,16 +60,18 @@ public class Toy {
         this.age = age;
     }
 
-    public List<Child> getChildren() {
-        return children;
+    public List<Toy> getToys() {
+        return toys;
     }
 
-    public void setChildren(List<Child> children) {
-        this.children = children;
+    public void setToys(List<Toy> toys) {
+        this.toys = toys;
     }
 
-    public void addChildren(Child c) {
-        this.children.add(c);
+    public void addToy(Toy t) {
+        this.toys.add(t);
+        if(!t.getTools().contains(this))
+            t.getTools().add(this);
     }
 
     public Double getPrice() {
@@ -84,25 +82,11 @@ public class Toy {
         this.price = price;
     }
 
-    public List<Tool> getTools() {
-        return tools;
-    }
-
-    public void setTools(List<Tool> tools) {
-        this.tools = tools;
-    }
-
-    public void addTool(Tool tool) {
-        this.tools.add(tool);
-        if(!tool.getToys().contains(this))
-            tool.addToy(this);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Toy toy = (Toy) o;
+        Tool toy = (Tool) o;
         return id == toy.id && Objects.equals(name, toy.name) && Objects.equals(age, toy.age);
     }
 

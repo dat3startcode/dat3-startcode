@@ -9,6 +9,8 @@ import utils.EMF_Creator;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ParentFacadeTest {
@@ -99,6 +101,8 @@ class ParentFacadeTest {
         Parent expected = p1;
         Parent actual = facade.getById(p1.getId());
         assertEquals(expected, actual);
+        //assert child
+        assert(actual.getChildren().contains(c1));
     }
 
     @Test
@@ -108,6 +112,7 @@ class ParentFacadeTest {
         int actual = facade.getAll().size();
         assertEquals(expected,actual);
     }
+
 
     @Test
     void update() throws EntityNotFoundException {
