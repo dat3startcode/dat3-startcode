@@ -44,6 +44,7 @@ class ParentFacadeTest {
             p2 = new Parent("Mommy", 50);
             c1 = new Child("Dorthea", 3);
             c2 = new Child("Frederik", 6);
+            p1.addChild(c1);
             em.persist(p1);
             em.persist(p2);
             em.persist(c1);
@@ -123,18 +124,53 @@ class ParentFacadeTest {
         p2.addChild(c1);
         p2.addChild(c2);
         Parent p = facade.update(p2);
+        //assert no duplicates
+        int expectedNumberOfChildren = 2;
+        int actualNumberOfChildren = (int)(long) emf.createEntityManager().createNativeQuery("SELECT COUNT(id) FROM CHILD").getSingleResult();
+        assertEquals(expectedNumberOfChildren, actualNumberOfChildren);
+        //assert bidirectional relationship
+        Parent expectedParent = p;
+        Parent actualParent = emf.createEntityManager().find(Child.class, c2.getId()).getParent();
+        assertEquals(expectedParent, actualParent);
+    }
+
+    @Test
+    void updateWithNewChildren() throws EntityNotFoundException {
+        System.out.println("Testing Update(Parent p) with known children");
+        p2.addChild(new Child("Hobs",12));
+        p2.addChild(new Child("Josephine",2));
+        Parent p = facade.update(p2);
         int expected = 2;
         int actual = p.getChildren().size();
         assertEquals(expected,actual);
+        int expectedNumberOfChildren = 4;
+        int actualNumberOfChildren = (int)(long)emf.createEntityManager().createNativeQuery("SELECT COUNT(id) FROM CHILD").getSingleResult();
+        assertEquals(expectedNumberOfChildren, actualNumberOfChildren);
     }
 
     @Test
     void delete() throws EntityNotFoundException {
         System.out.println("Testing delete(id)");
         Parent p = facade.delete(p1.getId());
-        int expected = 1;
-        int actual = facade.getAll().size();
-        assertEquals(expected, actual);
+        int expectedNumber = 1;
+        int actualNumber = facade.getAll().size();
+        assertEquals(expectedNumber, actualNumber);
         assertEquals(p,p1);
+        //assert children removed
+        Child found = emf.createEntityManager().find(Child.class, c1.getId());
+        assertTrue(found==null);
+    }
+
+    @Test
+    void deleteWithoutCascade() throws EntityNotFoundException {
+        System.out.println("Testing deleteWithoutCascade(id)");
+        Parent p = new ParentFacade().deleteWithoutCascading(p1.getId());
+        int expectedNumber = 1;
+        int actualNumber = facade.getAll().size();
+        assertEquals(expectedNumber, actualNumber);
+        assertEquals(p,p1);
+        //assert children detached
+        Child found = emf.createEntityManager().find(Child.class, c1.getId());
+        assertTrue(found.getParent()==null);
     }
 }

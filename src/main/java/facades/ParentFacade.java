@@ -22,8 +22,8 @@ public class ParentFacade implements IDataFacade<Parent> {
     private static ParentFacade instance;
     private static EntityManagerFactory emf;
 
-    //Private Constructor to ensure Singleton
-    private ParentFacade() {}
+    //package private Constructor to ensure Singleton
+    ParentFacade() {}
     
     
     /**
@@ -90,6 +90,12 @@ public class ParentFacade implements IDataFacade<Parent> {
     public Parent update(Parent parent) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
         em.getTransaction().begin();
+            parent.getChildren().forEach(child->{
+                if(child.getId()!=0)
+                    em.merge(child);
+                else
+                    em.persist(child);
+            });
         Parent p = em.merge(parent);
         em.getTransaction().commit();
         return p;
@@ -102,6 +108,42 @@ public class ParentFacade implements IDataFacade<Parent> {
         if (p == null)
             throw new EntityNotFoundException("Could not remove Parent with id: "+id);
         em.getTransaction().begin();
+        // remove dangling children
+        p.getChildren().forEach(child->{
+            if(child.getId()!=0)
+                //detach toys from child before removing child
+                child.getToys().forEach(toy->{
+                    if(toy.getId()!=0){
+                        toy.getChildren().remove(child);
+                        em.merge(toy);
+                    }
+
+                });
+                em.remove(child);
+        });
+        em.remove(p);
+        em.getTransaction().commit();
+        return p;
+    }
+
+    /**
+     * Alternative delete method that does not remove children
+     * @param id
+     * @return
+     * @throws EntityNotFoundException
+     */
+    public Parent deleteWithoutCascading(int id) throws EntityNotFoundException{
+        EntityManager em = getEntityManager();
+        Parent p = em.find(Parent.class, id);
+        if (p == null)
+            throw new EntityNotFoundException("Could not remove Parent with id: "+id);
+        em.getTransaction().begin();
+        // detach dangling children
+        p.getChildren().forEach(child->{
+            if(child.getId()!=0)
+                child.setParent(null);
+                em.merge(child);
+        });
         em.remove(p);
         em.getTransaction().commit();
         return p;
@@ -115,11 +157,10 @@ public class ParentFacade implements IDataFacade<Parent> {
 
 
     //TODO Remove/Change this before use
-    public long getRenameMeCount(){
+    public long count(){
         EntityManager em = getEntityManager();
         try{
-            long renameMeCount = (long)em.createQuery("SELECT COUNT(r) FROM RenameMe r").getSingleResult();
-            return renameMeCount;
+            return (long)em.createQuery("SELECT COUNT(p) FROM Parent p").getSingleResult();
         }finally{
             em.close();
         }
