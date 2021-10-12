@@ -1,4 +1,4 @@
-package facades;
+package datafacades;
 
 import utils.EMF_Creator;
 import entities.RenameMe;

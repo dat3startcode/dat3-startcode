@@ -1,7 +1,6 @@
-package facades;
+package datafacades;
 
 import entities.Child;
-import entities.Parent;
 import entities.Toy;
 import errorhandling.EntityNotFoundException;
 

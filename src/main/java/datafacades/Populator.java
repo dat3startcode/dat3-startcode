@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package facades;
+package datafacades;
 
-import dtos.RenameMeDTO;
 import entities.Child;
 import entities.Parent;
-import entities.RenameMe;
+
 import javax.persistence.EntityManagerFactory;
 
 import entities.Toy;

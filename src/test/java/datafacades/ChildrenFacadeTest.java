@@ -1,6 +1,5 @@
-package facades;
+package datafacades;
 
-import entities.Child;
 import entities.Child;
 import entities.Toy;
 import errorhandling.EntityNotFoundException;
@@ -10,7 +9,6 @@ import utils.EMF_Creator;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-import java.util.Arrays;
 import java.util.List;
 
 

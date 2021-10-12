@@ -1,9 +1,6 @@
-package facades;
+package datafacades;
 import java.util.List;
 import errorhandling.EntityNotFoundException;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 public interface IDataFacade<T> {
     T create(T t);

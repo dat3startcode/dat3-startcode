@@ -1,4 +1,4 @@
-package facades;
+package datafacades;
 
 import dtos.RenameMeDTO;
 import entities.RenameMe;

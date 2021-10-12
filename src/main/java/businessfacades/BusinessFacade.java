@@ -1,24 +1,25 @@
-package facades;
+package businessfacades;
 
+import datafacades.IDataFacade;
+import datafacades.ParentFacade;
 import dtos.ParentDTO;
 import entities.Parent;
 import errorhandling.EntityNotFoundException;
 import utils.EMF_Creator;
 
-import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
-public class RestFacade implements IDataFacade<ParentDTO> {
+public class BusinessFacade implements IDataFacade<ParentDTO> {
     private static IDataFacade<ParentDTO> instance;
     private static IDataFacade<Parent> parentFacade;
 
     //Private Constructor to ensure Singleton
-    private RestFacade() {}
+    private BusinessFacade() {}
 
-    public static IDataFacade<ParentDTO> getRestFacade() {
+    public static IDataFacade<ParentDTO> getFacade() {
         if (instance == null) {
              parentFacade = ParentFacade.getParentFacade(EMF_Creator.createEntityManagerFactory());
-            instance = new RestFacade();
+            instance = new BusinessFacade();
         }
         return instance;
     }

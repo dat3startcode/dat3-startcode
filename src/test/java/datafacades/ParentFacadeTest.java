@@ -1,8 +1,7 @@
-package facades;
+package datafacades;
 
 import entities.Child;
 import entities.Parent;
-import entities.RenameMe;
 import errorhandling.EntityNotFoundException;
 import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
@@ -32,7 +31,6 @@ class ParentFacadeTest {
     }
 
     // Setup the DataBase in a known state BEFORE EACH TEST
-    //TODO -- Make sure to change the code below to use YOUR OWN entity class
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
@@ -57,8 +55,6 @@ class ParentFacadeTest {
 
     @AfterEach
     public void tearDown() {
-//        Remove any data after each test was run
-//        emf.close();
     }
 
 

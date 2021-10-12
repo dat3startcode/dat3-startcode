@@ -3,16 +3,10 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dtos.ParentDTO;
-import dtos.RenameMeDTO;
-import entities.Parent;
 import errorhandling.EntityNotFoundException;
-import facades.FacadeExample;
-import facades.IDataFacade;
-import facades.ParentFacade;
-import facades.RestFacade;
-import utils.EMF_Creator;
+import datafacades.IDataFacade;
+import businessfacades.BusinessFacade;
 
-import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -21,7 +15,7 @@ import javax.ws.rs.core.Response;
 @Path("parent")
 public class ParentResource {
        
-    private static final IDataFacade<ParentDTO> FACADE =  RestFacade.getRestFacade();
+    private static final IDataFacade<ParentDTO> FACADE =  BusinessFacade.getFacade();
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
             
     @GET

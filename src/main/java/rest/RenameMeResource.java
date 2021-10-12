@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import dtos.RenameMeDTO;
 import errorhandling.EntityNotFoundException;
 import utils.EMF_Creator;
-import facades.FacadeExample;
+import datafacades.FacadeExample;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
