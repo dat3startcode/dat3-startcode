@@ -9,17 +9,17 @@ import utils.EMF_Creator;
 
 import java.util.List;
 
-public class BusinessFacade implements IDataFacade<ParentDTO> {
+public class ParentDTOFacade implements IDataFacade<ParentDTO> {
     private static IDataFacade<ParentDTO> instance;
     private static IDataFacade<Parent> parentFacade;
 
     //Private Constructor to ensure Singleton
-    private BusinessFacade() {}
+    private ParentDTOFacade() {}
 
     public static IDataFacade<ParentDTO> getFacade() {
         if (instance == null) {
              parentFacade = ParentFacade.getParentFacade(EMF_Creator.createEntityManagerFactory());
-            instance = new BusinessFacade();
+            instance = new ParentDTOFacade();
         }
         return instance;
     }

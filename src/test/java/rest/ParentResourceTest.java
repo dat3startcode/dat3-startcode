@@ -106,6 +106,7 @@ public class ParentResourceTest {
 
         try {
             em.getTransaction().begin();
+            em.createNamedQuery("Toy.deleteAllRows").executeUpdate();
             em.createNamedQuery("Child.deleteAllRows").executeUpdate();
             em.createNamedQuery("Parent.deleteAllRows").executeUpdate();
             em.persist(t1);
