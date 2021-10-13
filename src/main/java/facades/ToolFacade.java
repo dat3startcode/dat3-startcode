@@ -6,6 +6,7 @@ import errorhandling.EntityNotFoundException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -43,6 +44,14 @@ public class ToolFacade implements IDataFacade<Tool>{
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
+            // NOT WORKING: child is still persisted even when found first in db (if a toy exists with a specific name, we cannot persist this one. Rather get the one already there.
+            tool.getToys().forEach((toy)->{
+                try {
+                    toy = em.createQuery("SELECT t FROM Toy t WHERE t.name = :name", Toy.class).setParameter("name",toy.getName()).getSingleResult();
+                } catch (NoResultException e) {
+                    em.persist(toy);
+                }
+            });
             em.persist(tool);
             em.getTransaction().commit();
         } finally {

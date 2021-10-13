@@ -1,5 +1,6 @@
 
 # JPA snippets
+[Data Model can be found here](https://docs.google.com/document/d/1YrsGp67ODMlHHbDClwyhpK8TGJNa-SSCszltG6kHtQY/edit?usp=sharing)
 
 ### Setup in Intellij
 - open view->too windows->persistence

@@ -1,6 +1,7 @@
 package facades;
 
 import entities.Child;
+import entities.IdentificationCard;
 import entities.Parent;
 import errorhandling.EntityNotFoundException;
 import org.junit.jupiter.api.*;
@@ -19,6 +20,7 @@ class ParentFacadeTest {
     private static IDataFacade<Parent> facade;
     Parent p1,p2;
     Child c1,c2;
+    IdentificationCard i1;
 
     @BeforeAll
     public static void setUpClass() {
@@ -39,6 +41,7 @@ class ParentFacadeTest {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
+            em.createNamedQuery("IdentificationCard.deleteAllRows").executeUpdate();
             em.createNamedQuery("Toy.deleteAllRows").executeUpdate();
             em.createNamedQuery("Child.deleteAllRows").executeUpdate();
             em.createNamedQuery("Parent.deleteAllRows").executeUpdate();
@@ -46,7 +49,10 @@ class ParentFacadeTest {
             p2 = new Parent("Mommy", 50);
             c1 = new Child("Dorthea", 3);
             c2 = new Child("Frederik", 6);
+            i1 = new IdentificationCard(IdentificationCard.IdentificationType.DRIVERS_LICENS,"3333333333","Should be renewed soon");
+
             p1.addChild(c1);
+            p1.addCard(i1);
             em.persist(p1);
             em.persist(p2);
             em.persist(c1);
@@ -93,6 +99,20 @@ class ParentFacadeTest {
         Parent expected = p;
         Parent actual   = facade.create(p);
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void createPersistCard() {
+        System.out.println("Testing create(Parent p) see if IdentificationCard is persisted to");
+        Parent p = new Parent("TestParent",10);
+        IdentificationCard i = new IdentificationCard(IdentificationCard.IdentificationType.DRIVERS_LICENS, "44444444444","Issued in 75");
+        p.addCard(i);
+        Parent created = facade.create(p);
+        assertTrue(created.getCards().contains(i));
+        IdentificationCard ic = emf.createEntityManager().createQuery("SELECT i FROM IdentificationCard i WHERE i.number = '44444444444'",IdentificationCard.class).getSingleResult();
+        Parent expected = created;
+        Parent actual = ic.getParent();
+        assertEquals(expected,actual);
     }
 
     @Test
@@ -168,7 +188,7 @@ class ParentFacadeTest {
 
     @Test
     void deleteWithoutCascade() throws EntityNotFoundException {
-        System.out.println("Testing deleteWithoutCascade(id)");
+        System.out.println("Testing deleteWithoutCascade(id) so the child of the parent are still there when parent is deleted");
         Parent p = new ParentFacade().deleteWithoutCascading(p1.getId());
         int expectedNumber = 1;
         int actualNumber = facade.getAll().size();
@@ -177,5 +197,12 @@ class ParentFacadeTest {
         //assert children detached
         Child found = emf.createEntityManager().find(Child.class, c1.getId());
         assertTrue(found.getParent()==null);
+    }
+
+    @Test
+    void deleteAndRemoveCard() throws EntityNotFoundException {
+        System.out.println("Testing delete to see that the cards are remove to");
+        facade.delete(p1.getId());
+        assertNull(emf.createEntityManager().find(IdentificationCard.class,i1.getId()));
     }
 }

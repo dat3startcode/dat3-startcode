@@ -42,7 +42,6 @@ class ToolFacadeTest {
             em.getTransaction().begin();
             em.createNamedQuery("Toy.deleteAllRows").executeUpdate();
             em.createNamedQuery("Tool.deleteAllRows").executeUpdate();
-            em.createNamedQuery("Tool.deleteAllRows").executeUpdate();
             t1 = new Tool("Wrench", 55, 2.00);
             t2 = new Tool("Hammer", 50, 10.00);
             t3 = new Tool("Pliers", 3, 33.00);
@@ -59,7 +58,7 @@ class ToolFacadeTest {
             em.persist(t2);
             em.persist(t3);
             em.persist(t4);
-            em.persist(toy3);
+            em.persist(toy3); //toy 3 and 4 are persisted alone
             em.persist(toy4);
             em.getTransaction().commit();
         } finally {
@@ -95,14 +94,12 @@ class ToolFacadeTest {
 
     @Test
     void createWithKnownToys() {
-        System.out.println("Testing create(Tool p) with tools added");
+        System.out.println("Testing create(Tool p) with tools added. The CascadeType.Persist will result in toy3 trying to be persisted again. Toy.name has a unique constraint that makes this impossible. Solution: DONT use Cascade with non indentifying relationships");
         Tool t = new Tool("TestTool", 10, 2.00);
         t.addToy(toy3);
-        t.addToy(toy4);
         Tool expected = t;
-        Tool actual = facade.create(t);
-        assertEquals(expected, actual);
-        // TEST THAT TOYS WHERE ADDED
+        assertThrows(javax.persistence.RollbackException.class, ()->facade.create(t));
+
     }
 
     @Test
@@ -132,7 +129,7 @@ class ToolFacadeTest {
 
     @Test
     void updateWithToys() throws EntityNotFoundException {
-        System.out.println("Testing Update(Tool p) with known toys");
+        System.out.println("Testing Update(Tool p) with known toys without getting duplicate");
         t3.addToy(toy3);
         Tool p = facade.update(t3);
         //assert no duplicates
@@ -141,9 +138,7 @@ class ToolFacadeTest {
         assertEquals(expectedNumberOfToys, actualNumberOfToys);
         //assert bidirectional relationship
         Toy toy = emf.createEntityManager().find(Toy.class, toy3.getId());
-        System.out.println(toy);
-        List<Tool> tools = toy.getTools();
-        assertTrue(tools.contains(t3));
+        assertTrue(toy.getTools().contains(t3));
     }
 
     @Test
@@ -166,7 +161,7 @@ class ToolFacadeTest {
 
     @Test
     void delete() throws EntityNotFoundException {
-        System.out.println("Testing delete(id)");
+        System.out.println("Testing delete(id) to see that delete are cascaded forth and back between toys and tools");
         Tool t = facade.delete(t1.getId());
         int expectedNumber = 2; //cascadeType delete on both ends will remove t1 -> then toy 1 and toy 2 -> then from toy2 -> t2
         int actualNumber = facade.getAll().size();

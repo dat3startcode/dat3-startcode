@@ -12,15 +12,13 @@ public class Tool {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(unique=true)
     private String name;
     private Integer age;
     private Double price;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable( // This is now the owner side of the relationsship
-            name = "toys_tools",
-            joinColumns = @JoinColumn(name = "toy_id"),
-            inverseJoinColumns = @JoinColumn(name = "tool_id"))
+    //Cascading between Tool and Toy is a BAD idea (since both has their own identity (they can exist meaningfully without each other)). Problems can be seen in ToolFacadeTest
+    @ManyToMany(mappedBy = "tools", cascade = CascadeType.ALL) //NEVER USE CascadeType.ALL here because NEVER USE CascadeType.REMOVE on ManyToMany (and especially BAD using it on both sides of the relationship)
     private List<Toy> toys;
 
     public Tool() {}

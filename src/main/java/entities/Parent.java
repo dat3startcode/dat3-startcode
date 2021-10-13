@@ -13,8 +13,10 @@ public class Parent {
     private int id;
     private String name;
     private Integer age;
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "parent") //Do not use CascadeTypes here, because Children has other unidentifying relationships.
     private List<Child> children;
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL) //ID cards are personal and exist only when a persen does (Identifying relationship)
+    private List<IdentificationCard> cards;
 
     public Parent() {}
 
@@ -22,6 +24,7 @@ public class Parent {
         this.name = name;
         this.age = age;
         this.children = new ArrayList();
+        this.cards = new ArrayList();
     }
 
     public int getId() {
@@ -87,4 +90,18 @@ public class Parent {
         this.children.add(child);
         child.setParent(this); //Child gets a parent when parent gets the child
     }
+
+    public List<IdentificationCard> getCards() {
+        return cards;
+    }
+
+    public void setCards(List<IdentificationCard> cards) {
+        this.cards = cards;
+    }
+
+    public void addCard(IdentificationCard card) {
+        this.cards.add(card);
+        card.setParent(this);
+    }
+
 }

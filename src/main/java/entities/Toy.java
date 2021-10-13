@@ -12,18 +12,23 @@ public class Toy {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(unique=true)
     private String name;
     private Integer age;
     private Double price;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable( // This is now the owner side of the relationsship
             name = "children_toys",
             joinColumns = @JoinColumn(name = "child_id"),
             inverseJoinColumns = @JoinColumn(name = "toy_id"))
     private List<Child> children;
 
-    @ManyToMany (mappedBy = "toys", cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL) //BAD idea to have cascade here between Toy and Tool (Since ones existence is not dependend on another). See ToolFacadeTest
+    @JoinTable( // This is now the owner side of the relationsship
+            name = "toys_tools",
+            joinColumns = @JoinColumn(name = "tool_id"),
+            inverseJoinColumns = @JoinColumn(name = "toys_id"))
     private List<Tool> tools;
 
     public Toy() {}
