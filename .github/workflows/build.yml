@@ -18,12 +18,12 @@ jobs:
         with:
           java-version: 11
       - name: mysql
-          uses: mirromutth/mysql-action@v1.1
-          with:
-            mysql version: '8.0'
-            mysql database: 'startcode_test'
-            mysql user: 'dev'
-            mysql password: 'ax2'
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          mysql version: '8.0'
+          mysql database: 'startcode_test'
+          mysql user: 'dev'
+          mysql password: 'ax2'
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
         with:
