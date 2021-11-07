@@ -16,5 +16,4 @@ public class ExceptionDTO {
     public String getMessage() {
         return message;
     }
-
 }
