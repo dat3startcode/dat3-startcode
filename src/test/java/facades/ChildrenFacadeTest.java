@@ -1,7 +1,6 @@
 package facades;
 
 import entities.Child;
-import entities.Child;
 import entities.Toy;
 import errorhandling.EntityNotFoundException;
 import org.junit.jupiter.api.*;
@@ -156,8 +155,8 @@ class ChildrenFacadeTest {
     }
 
     @Test
-    void updateWithChildren() throws EntityNotFoundException {
-        System.out.println("Testing Update(Child p) with known children using merge");
+    void updateWithToys() throws EntityNotFoundException {
+        System.out.println("Testing Update(Child c) with known toys");
         c2.addToy(t1);
         c2.addToy(t2);
         Child c = facade.update(c2);
@@ -165,6 +164,17 @@ class ChildrenFacadeTest {
         int actual = c.getToys().size();
         assertEquals(expected,actual);
         actual = (int)(long) emf.createEntityManager().createNativeQuery("SELECT COUNT(*) FROM TOY").getSingleResult();
+        assertEquals(expected, actual,"Testing for duplicate toys");
+    }
+    @Test
+    void updateWithNewToys() throws EntityNotFoundException {
+        System.out.println("Testing Update(Child c) with new toys");
+        c1.addToy(new Toy("Teddybear",3,1.00));
+        Child c = facade.update(c1);
+        int expected = 1;
+        int actual = c.getToys().size();
+        assertEquals(expected,actual);
+        actual = (int)(long) emf.createEntityManager().createNativeQuery("SELECT COUNT(*) FROM children_toys WHERE children_toys.toy_id = "+c1.getId()+"").getSingleResult();
         assertEquals(expected, actual,"Testing for duplicate toys");
     }
 

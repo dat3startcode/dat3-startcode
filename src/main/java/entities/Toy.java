@@ -12,7 +12,7 @@ public class Toy {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(unique=true)
+    @Column(unique=true) // these unique constraint helps avoid that multiple entities of the same identity are created. Especially usefull when using cascades.
     private String name;
     private Integer age;
     private Double price;
