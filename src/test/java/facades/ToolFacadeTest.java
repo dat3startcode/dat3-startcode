@@ -1,5 +1,6 @@
 package facades;
 
+import com.sun.xml.bind.v2.TODO;
 import entities.Tool;
 import entities.Tool;
 import entities.Toy;
@@ -158,6 +159,7 @@ class ToolFacadeTest {
         Toy toy = emf.createEntityManager().createQuery("SELECT toy FROM Toy toy WHERE toy.name = 'Gummi bear'",Toy.class).getSingleResult();
         assertTrue(toy.getTools().contains(t));
     }
+   // TODO: create test case with cascading updates when related object has changed.
 
     @Test
     void delete() throws EntityNotFoundException {
