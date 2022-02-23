@@ -15,7 +15,7 @@ import io.restassured.response.ResponseOptions;
 import io.restassured.response.ValidatableResponse;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
 
 import javax.persistence.EntityManagerFactory;
@@ -41,10 +41,8 @@ import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
 //Uncomment the line below, to temporarily disable this test
 //@Disabled
 public class ParentResourceTest {
@@ -126,6 +124,22 @@ public class ParentResourceTest {
     public void testServerIsUp() {
         System.out.println("Testing is server UP");
         given().when().get("/parent").then().statusCode(200);
+    }
+
+    @Test
+    public void testLog() {
+        System.out.println("Testing logging request details");
+        given().log().all()
+                .when().get("/parent")
+                .then().statusCode(200);
+    }
+
+    @Test
+    public void testLogResponse() {
+        System.out.println("Testing logging response details");
+        given()
+                .when().get("/parent")
+                .then().log().body().statusCode(200);
     }
 
     @Test
@@ -224,7 +238,6 @@ public class ParentResourceTest {
 
         given()
                 .header("Content-type", ContentType.JSON)
-                .and()
                 .body(requestBody)
                 .when()
                 .put("/parent/"+p2.getId())
