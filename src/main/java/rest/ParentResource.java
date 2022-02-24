@@ -31,6 +31,7 @@ public class ParentResource {
         ParentDTO p = FACADE.getById(id);
         return Response.ok().entity(GSON.toJson(p)).build();
     }
+
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
@@ -39,6 +40,7 @@ public class ParentResource {
         ParentDTO newPdto = FACADE.create(pdto);
         return Response.ok().entity(GSON.toJson(newPdto)).build();
     }
+
     @PUT
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})

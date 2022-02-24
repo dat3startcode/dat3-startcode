@@ -2,6 +2,7 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import datafacades.ParentFacade;
 import dtos.ChildDTO;
 import dtos.ParentDTO;
 import entities.Child;
@@ -27,6 +28,8 @@ import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.parsing.Parser;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -127,7 +130,7 @@ public class ParentResourceTest {
     }
 
     @Test
-    public void testLog() {
+    public void testLogRequest() {
         System.out.println("Testing logging request details");
         given().log().all()
                 .when().get("/parent")
@@ -260,4 +263,65 @@ public class ParentResourceTest {
                 .statusCode(200)
                 .body("id",equalTo(p2.getId()));
     }
+
+    // More test tools from: https://www.baeldung.com/java-junit-hamcrest-guide
+    @Test
+    public void testListSize() {
+        System.out.println("Check size of list");
+        List<String> hamcrestMatchers = Arrays.asList(
+                "collections", "beans", "text", "number");
+        assertThat(hamcrestMatchers, hasSize(4));
+    }
+    @Test
+    public void testPropAndValue() {
+        System.out.println("Check for property and value on an entity instance");
+        Parent person = new Parent("Benjamin", 33);
+        assertThat(person, hasProperty("name", equalTo("Benjamin")));
+    }
+    @Test
+    public void testCompareObjects() {
+        System.out.println("Check if 2 instances has same property values (EG. use compare properties rather than objects");
+        Parent person1 = new Parent("Betty", 45);
+        Parent person2 = new Parent("Betty", 45);
+        assertThat(person1, samePropertyValuesAs(person2));
+    }
+    @Test
+    public void testToString(){
+        System.out.println("Check if obj.toString() creates the right output");
+        Parent person=new Parent("Billy", 89);
+        String str=person.toString();
+        assertThat(person,hasToString(str));
+    }
+
+    @Test
+    public void testMapContains() {
+        List<Parent> parents = Arrays.asList(
+                new Parent("Henrik",67),
+                new Parent("Henriette",57)
+        );
+        assertThat(parents.toArray(), arrayContainingInAnyOrder(parents.get(0),parents.get(1)));
+    }
+    @Test
+    public void testNumeric() {
+        System.out.println("Test numeric values");
+        assertThat(1.2, closeTo(1, 0.5));
+        assertThat(5, greaterThanOrEqualTo(5));
+
+        List<Integer> list = Arrays.asList(1, 2, 3);
+        int baseCase = 0;
+        assertThat(list, everyItem(greaterThan(baseCase)));
+    }
+    @Test
+    public void testMoreReadable() {
+        System.out.println("Use the IS, NOT etc keywords for readability");
+        String str1 = "text";
+        String str2 = "texts";
+        String str3 = "texts";
+        String str4 = "These are several texts in one sentence";
+        assertThat(str1, not(str2));
+        assertThat(str2, is(str3));
+        assertThat(str4, containsString(str2));
+
+    }
+
 }
