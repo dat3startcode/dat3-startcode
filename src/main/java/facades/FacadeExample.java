@@ -1,10 +1,19 @@
 package facades;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import dtos.ChuckDTO;
 import dtos.RenameMeDTO;
 import entities.RenameMe;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
+import java.util.Scanner;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 //import errorhandling.RenameMeNotFoundException;
@@ -16,8 +25,11 @@ import utils.EMF_Creator;
  */
 public class FacadeExample {
 
+    private static final String CHUCK_URL = "https://api.chucknorris.io/jokes/random";
+    private static final String DAD_URL = "https://icanhazdadjoke.com";
     private static FacadeExample instance;
     private static EntityManagerFactory emf;
+    private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
     
     //Private Constructor to ensure Singleton
     private FacadeExample() {}
@@ -36,52 +48,37 @@ public class FacadeExample {
         return instance;
     }
 
-    private EntityManager getEntityManager() {
-        return emf.createEntityManager();
-    }
-    
-    public RenameMeDTO create(RenameMeDTO rm){
-        RenameMe rme = new RenameMe(rm.getDummyStr1(), rm.getDummyStr2());
-        EntityManager em = getEntityManager();
+
+    public String readJoke(String uRL_STRING){
+        String jsonStr = "";
         try {
-            em.getTransaction().begin();
-            em.persist(rme);
-            em.getTransaction().commit();
-        } finally {
-            em.close();
+            URL url = new URL(uRL_STRING);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("Accept", "application/json");
+            con.setRequestProperty("User-Agent", "MyApp");
+            try (Scanner scan = new Scanner(con.getInputStream())) {
+                while (scan.hasNext()) {
+                    jsonStr += scan.nextLine();
+                }
+            }
+        } catch (IOException ioex) {
+            System.out.println("Error: " + ioex.getMessage());
         }
-        return new RenameMeDTO(rme);
+        return jsonStr;
     }
-    public RenameMeDTO getById(long id) { //throws RenameMeNotFoundException {
-        EntityManager em = emf.createEntityManager();
-        RenameMe rm = em.find(RenameMe.class, id);
-//        if (rm == null)
-//            throw new RenameMeNotFoundException("The RenameMe entity with ID: "+id+" Was not found");
-        return new RenameMeDTO(rm);
-    }
-    
-    //TODO Remove/Change this before use
-    public long getRenameMeCount(){
-        EntityManager em = getEntityManager();
-        try{
-            long renameMeCount = (long)em.createQuery("SELECT COUNT(r) FROM RenameMe r").getSingleResult();
-            return renameMeCount;
-        }finally{  
-            em.close();
-        }
-    }
-    
-    public List<RenameMeDTO> getAll(){
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<RenameMe> query = em.createQuery("SELECT r FROM RenameMe r", RenameMe.class);
-        List<RenameMe> rms = query.getResultList();
-        return RenameMeDTO.getDtos(rms);
-    }
-    
-    public static void main(String[] args) {
-        emf = EMF_Creator.createEntityManagerFactory();
-        FacadeExample fe = getFacadeExample(emf);
-        fe.getAll().forEach(dto->System.out.println(dto));
+    public ChuckDTO getChuckJoke(){
+        ChuckDTO chuck  = gson.fromJson(readJoke(CHUCK_URL), ChuckDTO.class);
+        return chuck;
     }
 
+    public static void main(String[] args) {
+        FacadeExample facade = getFacadeExample(EMF_Creator.createEntityManagerFactory());
+
+        String output = facade.readJoke(DAD_URL);
+        System.out.println(output);
+        ChuckDTO chuck = facade.getChuckJoke();
+        System.out.println("DTO:");
+        System.out.println(chuck.getValue());
+    }
 }
