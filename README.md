@@ -2,6 +2,11 @@
 # JPA snippets
 [Data Model can be found here](https://docs.google.com/document/d/1YrsGp67ODMlHHbDClwyhpK8TGJNa-SSCszltG6kHtQY/edit?usp=sharing)
 
+### TODO: 
+1. Create example with call to other method that merges the object. Then em.find and see the entity hasnt changed. (Like viewno and reorderAll in photoviewer)
+2. Create example with @ManyToMany duplicate entry ... for key. Even when using Set instead of list on both sides. (Because of using new operator or persist instead of merge)
+3. @ManyToMany update list if it is changed on depending side.
+
 ### Setup in Intellij
 - open view->too windows->persistence
 - open the Database tab and create a new data source (remember to point to a database even though this is already written in the persistence unit. This is necessary in order to use the Persistence window)
