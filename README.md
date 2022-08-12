@@ -76,3 +76,5 @@
 - Tests verify that NO DUPLICATES are created
 - Tests verify that related entities are persisted or merged with related entities (both known and unknown in db)
 
+#### Dates and JPA lifecycle methods
+- See IdentificationCard entity for automatic updates of created and updated dates

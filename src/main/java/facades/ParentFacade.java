@@ -71,23 +71,33 @@ public class ParentFacade implements IDataFacade<Parent> {
     @Override
     public Parent getById(int id) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
-        Parent p = em.find(Parent.class, id);
-        if (p == null)
-            throw new EntityNotFoundException("The RenameMe entity with ID: " + id + " Was not found");
-        return p;
+        try {
+            Parent p = em.find(Parent.class, id);
+            if (p == null)
+                throw new EntityNotFoundException("The RenameMe entity with ID: " + id + " Was not found");
+            return p;
+        } finally {
+            em.close();
+        }
     }
 
     @Override
     public List<Parent> getAll() {
         EntityManager em = getEntityManager();
+        try {
         TypedQuery<Parent> query = em.createQuery("SELECT p FROM Parent p", Parent.class);
         List<Parent> parents = query.getResultList();
         return parents;
+        } finally {
+            em.close();
+        }
     }
 
     @Override
     public Parent update(Parent parent) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
+        try {
+
         em.getTransaction().begin();
         parent.getChildren().forEach(child -> {
             if (child.getId() != 0)
@@ -98,30 +108,37 @@ public class ParentFacade implements IDataFacade<Parent> {
         Parent p = em.merge(parent);
         em.getTransaction().commit();
         return p;
+        } finally {
+        em.close();
+    }
     }
 
     @Override
     public Parent delete(int id) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
-        Parent p = em.find(Parent.class, id);
-        if (p == null)
-            throw new EntityNotFoundException("Could not remove Parent with id: " + id);
-        em.getTransaction().begin();
-        // remove dangling children
-        p.getChildren().forEach(child -> {
-            if (child.getId() != 0)
-                //detach toys from child before removing child
-                child.getToys().forEach(toy -> {
-                    if (toy.getId() != 0) {
-                        toy.getChildren().remove(child);
-                        em.merge(toy);
-                    }
-                });
-            em.remove(child);
-        });
-        em.remove(p);
-        em.getTransaction().commit();
-        return p;
+        try {
+            Parent p = em.find(Parent.class, id);
+            if (p == null)
+                throw new EntityNotFoundException("Could not remove Parent with id: " + id);
+            em.getTransaction().begin();
+            // remove dangling children
+            p.getChildren().forEach(child -> {
+                if (child.getId() != 0)
+                    //detach toys from child before removing child
+                    child.getToys().forEach(toy -> {
+                        if (toy.getId() != 0) {
+                            toy.getChildren().remove(child);
+                            em.merge(toy);
+                        }
+                    });
+                em.remove(child);
+            });
+            em.remove(p);
+            em.getTransaction().commit();
+            return p;
+        } finally {
+            em.close();
+        }
     }
 
     /**
@@ -133,6 +150,7 @@ public class ParentFacade implements IDataFacade<Parent> {
      */
     public Parent deleteWithoutCascading(int id) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
+        try {
         Parent p = em.find(Parent.class, id);
         if (p == null)
             throw new EntityNotFoundException("Could not remove Parent with id: " + id);
@@ -146,6 +164,9 @@ public class ParentFacade implements IDataFacade<Parent> {
         em.remove(p);
         em.getTransaction().commit();
         return p;
+        } finally {
+            em.close();
+        }
     }
 
     public static void main(String[] args) {

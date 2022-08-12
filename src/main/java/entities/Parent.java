@@ -13,7 +13,7 @@ public class Parent {
     private int id;
     private String name;
     private Integer age;
-    @OneToMany(mappedBy = "parent") //Do not use CascadeTypes here, because Children has other unidentifying relationships.
+    @OneToMany(mappedBy = "parent") //Do not use CascadeTypes here, because Children has other non-identifying relationships.
     private List<Child> children;
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL) //ID cards are personal and exist only when a persen does (Identifying relationship)
     private List<IdentificationCard> cards;
