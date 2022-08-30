@@ -11,6 +11,7 @@ import javax.persistence.EntityManagerFactory;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -109,7 +110,7 @@ class ChildrenFacadeTest {
         Child c = new Child("TestChild",10);
         c.addToy(new Toy("Ballon castle",10, 30.00));
         c.addToy(new Toy("Chess board",8, 60.00));
-        List<Toy> result   = facade.create(c).getToys();
+        Set<Toy> result   = facade.create(c).getToys();
         assertThat(result, containsInAnyOrder(
                 hasProperty("name", is("Ballon castle")),
                 hasProperty("name", is("Chess board"))

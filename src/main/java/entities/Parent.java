@@ -2,7 +2,9 @@ package entities;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @NamedQuery(name = "Parent.deleteAllRows", query = "DELETE from Parent")
@@ -14,17 +16,17 @@ public class Parent {
     private String name;
     private Integer age;
     @OneToMany(mappedBy = "parent") //Do not use CascadeTypes here, because Children has other non-identifying relationships.
-    private List<Child> children;
+    private Set<Child> children;
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL) //ID cards are personal and exist only when a persen does (Identifying relationship)
-    private List<IdentificationCard> cards;
+    private Set<IdentificationCard> cards;
 
     public Parent() {}
 
     public Parent(String name, Integer age) {
         this.name = name;
         this.age = age;
-        this.children = new ArrayList();
-        this.cards = new ArrayList();
+        this.children = new HashSet<>();
+        this.cards = new HashSet<>();
     }
 
     public int getId() {
@@ -78,11 +80,11 @@ public class Parent {
     }
 
 
-    public List<Child> getChildren() {
+    public Set<Child> getChildren() {
         return children;
     }
 
-    public void setChildren(List<Child> children) {
+    public void setChildren(Set<Child> children) {
         this.children = children;
     }
 
@@ -91,11 +93,11 @@ public class Parent {
         child.setParent(this); //Child gets a parent when parent gets the child
     }
 
-    public List<IdentificationCard> getCards() {
+    public Set<IdentificationCard> getCards() {
         return cards;
     }
 
-    public void setCards(List<IdentificationCard> cards) {
+    public void setCards(Set<IdentificationCard> cards) {
         this.cards = cards;
     }
 

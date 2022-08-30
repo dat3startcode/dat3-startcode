@@ -1,9 +1,7 @@
 package entities;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @NamedQuery(name = "Toy.deleteAllRows", query = "DELETE from Toy")
@@ -22,14 +20,14 @@ public class Toy {
             name = "children_toys",
             joinColumns = @JoinColumn(name = "child_id"),
             inverseJoinColumns = @JoinColumn(name = "toy_id"))
-    private List<Child> children;
+    private Set<Child> children;
 
     @ManyToMany(cascade = CascadeType.ALL) //BAD idea to have cascade here between Toy and Tool (Since ones existence is not dependend on another). See ToolFacadeTest
     @JoinTable( // This is now the owner side of the relationsship
             name = "toys_tools",
             joinColumns = @JoinColumn(name = "tool_id"),
             inverseJoinColumns = @JoinColumn(name = "toys_id"))
-    private List<Tool> tools;
+    private Set<Tool> tools;
 
     public Toy() {}
 
@@ -37,8 +35,8 @@ public class Toy {
         this.name = name;
         this.age = age;
         this.price = price;
-        this.children = new ArrayList<>();
-        this.tools = new ArrayList<>();
+        this.children = new HashSet<>();
+        this.tools = new HashSet<>();
     }
 
     public int getId() {
@@ -69,11 +67,11 @@ public class Toy {
         this.age = age;
     }
 
-    public List<Child> getChildren() {
+    public Set<Child> getChildren() {
         return children;
     }
 
-    public void setChildren(List<Child> children) {
+    public void setChildren(Set<Child> children) {
         this.children = children;
     }
 
@@ -89,11 +87,11 @@ public class Toy {
         this.price = price;
     }
 
-    public List<Tool> getTools() {
+    public Set<Tool> getTools() {
         return tools;
     }
 
-    public void setTools(List<Tool> tools) {
+    public void setTools(Set<Tool> tools) {
         this.tools = tools;
     }
 

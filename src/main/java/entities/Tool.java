@@ -1,9 +1,7 @@
 package entities;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @NamedQuery(name = "Tool.deleteAllRows", query = "DELETE from Tool")
@@ -19,7 +17,7 @@ public class Tool {
 
     //Cascading between Tool and Toy is a BAD idea (since both has their own identity (they can exist meaningfully without each other)). Problems can be seen in ToolFacadeTest
     @ManyToMany(mappedBy = "tools", cascade = CascadeType.ALL) //NEVER USE CascadeType.ALL here because NEVER USE CascadeType.REMOVE on ManyToMany (and especially BAD using it on both sides of the relationship)
-    private List<Toy> toys;
+    private Set<Toy> toys;
 
     public Tool() {}
 
@@ -27,7 +25,7 @@ public class Tool {
         this.name = name;
         this.age = age;
         this.price = price;
-        this.toys = new ArrayList<>();
+        this.toys = new HashSet();
     }
 
     public int getId() {
@@ -58,11 +56,11 @@ public class Tool {
         this.age = age;
     }
 
-    public List<Toy> getToys() {
+    public Set<Toy> getToys() {
         return toys;
     }
 
-    public void setToys(List<Toy> toys) {
+    public void setToys(Set<Toy> toys) {
         this.toys = toys;
     }
 
