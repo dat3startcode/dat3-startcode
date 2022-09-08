@@ -1,6 +1,3 @@
-# JPA Dilemmas
-See the familyphotos app for examples: /Users/tha/Projects/sem3/demos/familyphotos.
-
 ## Dates
 1. Update them on mysql server and annotate with `@Column(name = "colname", updatable = false)`
 2. Use java.time.LocalDateTime to avoid using `@Temporal`
