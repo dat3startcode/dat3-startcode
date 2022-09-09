@@ -67,8 +67,6 @@ class ChildrenFacadeTest {
 
     @AfterEach
     public void tearDown() {
-//        Remove any data after each test was run
-//        emf.close();
     }
 
 

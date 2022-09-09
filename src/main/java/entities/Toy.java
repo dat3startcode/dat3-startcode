@@ -4,7 +4,10 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@NamedQuery(name = "Toy.deleteAllRows", query = "DELETE from Toy")
+@NamedQueries({
+        @NamedQuery(name = "Toy.deleteAllRows", query = "DELETE from Toy"),
+        @NamedQuery(name = "Toy.findAllToys", query = "Select t from Toy t")
+})
 public class Toy {
     @Id
     @Column(name = "id")
