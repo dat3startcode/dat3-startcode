@@ -56,5 +56,7 @@ This document explains how to use this code (build, test and deploy), locally wi
 ### In netbeans it is much easier
 - Right click project name -> new -> persistence -> Entity classes From Database -> choose database connection from list -> add the tables you need -> Finish
 
+ ### Project setup for each new assignment
+ [Find guide here](https://github.com/HartmannDemoCode/pages/blob/master/week4-rest/day1.md)
 
 
