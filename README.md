@@ -16,6 +16,7 @@
 
 This document explains how to use this code (build, test and deploy), locally with maven, and remotely with maven controlled by Github actions
  - [How to use](https://docs.google.com/document/d/1rymrRWF3VVR7ujo3k3sSGD_27q73meGeiMYtmUtYt6c/edit?usp=sharing)
+ - Find more simple guide at bottom of this page
 
 ### JPA snippets
 
