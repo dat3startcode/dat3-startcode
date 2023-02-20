@@ -25,8 +25,9 @@ public class RenameMeResource {
     public String demo() {
         return "{\"msg\":\"Hello World\"}";
     }
-    @Path("count")
+
     @GET
+    @Path("count")
     @Produces({MediaType.APPLICATION_JSON})
     public String getRenameMeCount() {
        
