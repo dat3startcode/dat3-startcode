@@ -57,4 +57,10 @@ This document explains how to use this code (build, test and deploy), locally wi
 - Right click project name -> new -> persistence -> Entity classes From Database -> choose database connection from list -> add the tables you need -> Finish
 
 
+# TODO
+- JPA Annotations
+- Deployment of REST endpoints
+- Rest Assured on Github actions
+- Frontend with React reading from REST endpoints.
+- React component structure (where to get data, where to put state).
 
