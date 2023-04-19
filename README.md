@@ -58,7 +58,7 @@ This document explains how to use this code (build, test and deploy), locally wi
 
 
 # TODO
-- JPA Annotations
+- JPA Annotations ManyToMany
 - Deployment of REST endpoints
 - Rest Assured on Github actions
 - Frontend with React reading from REST endpoints.
