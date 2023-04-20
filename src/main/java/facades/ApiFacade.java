@@ -7,8 +7,12 @@ import com.google.gson.JsonObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.Arrays;
 
 public class ApiFacade {
@@ -41,6 +45,10 @@ public class ApiFacade {
         JsonObject[] body;
     }
 
+    class DataDTO{
+        public JsonObject data;
+    }
+
     public static String jokesAPI(String apiKey) throws IOException {
         // Purpose of this example is to show an atypical json response (dealing with an array and JsonObject)
         // In order to run REGISTER TO GET API KEY HERE: https://rapidapi.com/KegenGuyll/api/dad-jokes/
@@ -67,12 +75,30 @@ public class ApiFacade {
         return myDTO.body[0].get("setup").toString() + " " + myDTO.body[0].get("punchline").toString();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         try {
-            zipRequester();
-            jokesAPI("registered api key here");
+//            zipRequester();
+//            jokesAPI("89f34a559fmsh6e84c8889eb98bfp12d8bejsn157e59c6bca6");
+            String url = "https://api.jikan.moe/v4/random/anime";
+            String response = getHttpResponse(url);
+            System.out.println(response);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static String getHttpResponse(String url) throws Exception {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .header("accept", "application/json")
+                .uri(URI.create(url))
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        // {"data":{"mal_id":18771,"url":"https:\/\/myanimelist.net\/anime\/18771\/Gifuu_Doudou__Kanetsugu_to_Keiji","images":{"jpg":{"image_url":"https:\/\/cdn.myanimelist.net\/images\/anime\/5\/51427.jpg",
+        System.out.println(response.body().toString());
+
+        DataDTO dataDTO = new Gson().fromJson(response.body(), DataDTO.class);
+        JsonObject jo = dataDTO.data;
+        return jo.get("images").getAsJsonObject().get("jpg").getAsJsonObject().get("image_url").getAsString();
     }
 }
