@@ -32,7 +32,7 @@ public class DemoResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getInfoForAll() {
-        return "{\"msg\":\"Hello anonymous person\"}";
+        return "{\"msg\":\"Hello anonymous\"}";
     }
 
     //Just to verify if the database is setup
