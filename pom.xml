@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>dat.sem3</groupId>
-    <artifactId>devops-starter</artifactId>
+    <artifactId>rest_start_code</artifactId>
     <version>1.0.1</version>
     <packaging>war</packaging>
 
-    <name>dat3-startcode</name>
+    <name>rest_start_code</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
@@ -24,13 +24,7 @@
     </properties>
     
     <dependencies>
-
-        <dependency>
-            <groupId>org.mindrot</groupId>
-            <artifactId>jbcrypt</artifactId>
-            <version>0.4</version>
-        </dependency>
-
+        
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>org.eclipse.persistence.jpa</artifactId>
@@ -48,7 +42,7 @@
             <artifactId>jaxrs-ri</artifactId>
             <version>2.32</version>
         </dependency>
-               
+        
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
@@ -101,21 +95,6 @@
             <version>4.3.1</version>
             <scope>test</scope>
         </dependency>
-        
-        <!-- Security Dependencies (jwt-support) -->
-        
-        <!-- https://mvnrepository.com/artifact/com.nimbusds/nimbus-jose-jwt -->
-        <dependency>
-            <groupId>com.nimbusds</groupId>
-            <artifactId>nimbus-jose-jwt</artifactId>
-            <version>9.0.1</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.mindrot</groupId>
-            <artifactId>jbcrypt</artifactId>
-            <version>0.4</version>
-        </dependency>
 
         <!-- Used for setting database name in pom.xml -->
         <dependency>
@@ -165,25 +144,24 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.1</version>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <compilerArguments>
                         <endorseddirs>${endorsed.dir}</endorseddirs>
                     </compilerArguments>
                     <compilerArgs>
                         <!-- Comment in (and dont forget out) as required -->
                         <!-- <arg>-verbose</arg>-->
-                        <!--<arg>-Xlint:unchecked</arg>-->
-                        <!--<arg>-Xlint:deprecation</arg>-->
+                        <!-- <arg>-Xlint:unchecked</arg>-->
                     </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>3.3.2</version>
+                <version>3.3.1</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
@@ -191,7 +169,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.8</version>
+                <version>2.6</version>
                 <executions>
                     <execution>
                         <phase>validate</phase>
@@ -233,3 +211,4 @@
     </build>
 
 </project>
+
